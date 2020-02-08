@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa85cb59376a3ff4db9cfbdf6a61a3fc, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  characterName: Ally1
+  abilities:
+  - {fileID: 11400000, guid: e7d595a47aa7e014a90f5f0b0acef77e, type: 2}
+  - {fileID: 11400000, guid: 9fb299f712e69c443b31b9ad12bc3781, type: 2}
+  - {fileID: 11400000, guid: e6691b8eeac0c604db75116271c1420c, type: 2}
+  - {fileID: 11400000, guid: 76f88bc8d4f55494695d65702b102520, type: 2}
+  health: {x: 10, y: 10}
+  defense: {x: 10, y: 10}
+  will: {x: 5, y: 10}
+  crit: 5
+  acc: 5
+  dmg: {x: 5, y: 8}
+  speed: 2
+  dodge: 0

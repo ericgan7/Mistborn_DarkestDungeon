@@ -15,11 +15,16 @@ public class Heal : Effect {
     {
         AbilityResult r = new AbilityResult()
         {
+            actor = actor,
             target = target,
             amount = amount,
             result = Result.heal
         };
         results.targets.Add(r);
-        target.stats.Heal(amount);
+    }
+
+    public override string ToString(Unit target)
+    {
+        return string.Format("<color={1}><b>Heal</b></color> {0} health\n", amount, ColorPallete.GetHexColor("Green"));
     }
 }

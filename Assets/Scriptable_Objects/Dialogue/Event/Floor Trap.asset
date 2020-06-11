@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37bebacabfbc4e84b8da08b69d1ac759, type: 3}
+  m_Name: Floor Trap
+  m_EditorClassIdentifier: 
+  dialogueId: 0
+  text: You notice a thin plate covering the floor, partially obscured by the carpets
+    on the floor. Its likely trapped.
+  dialogueImage: {fileID: 0}
+  choices:
+  - {fileID: 11400000, guid: b363bf3ba7f67584b8050111eb54ec96, type: 2}
+  - {fileID: 11400000, guid: 26b43808b910c214c84f2265da973c6c, type: 2}

@@ -14,11 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Lurcher
   className: Iron
-  abilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  abilities: []
   characterClass: {fileID: 0}
   currentWeapon: {fileID: 0}
   health: {x: 0, y: 0}

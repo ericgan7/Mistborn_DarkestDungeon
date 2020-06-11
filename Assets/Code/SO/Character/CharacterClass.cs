@@ -9,5 +9,7 @@ public class CharacterClass : ScriptableObject
     public Sprite classIcon;
 
     public List<Ability> classAbilities;
-
+    public List<TraitTarget> attackBonuses;
+    //TODO: implement?
+    public List<StatusEffect> traitEffects;
 }

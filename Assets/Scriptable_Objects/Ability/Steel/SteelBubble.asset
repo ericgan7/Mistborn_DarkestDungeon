@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9ce35fa3d5b0f4b9f583812a7743bc, type: 3}
   m_Name: SteelBubble
   m_EditorClassIdentifier: 
-  abilityName: SteelBubble
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  targetable: {fileID: 11400000, guid: 309bc66c252cd7b4986e9158d059e343, type: 2}
+  abilityName: Steel Bubble
   usable: {fileID: 11400000, guid: 4d63d3e20506cfd48ba11bab6082d2ee, type: 2}
+  targetable: {fileID: 11400000, guid: 309bc66c252cd7b4986e9158d059e343, type: 2}
+  metalCost: 5
   isAOE: 0
   isSelf: 1
+  cancelDisplay: 0
+  isRanged: 0
   selfEffects:
-  - Defend 5
-  - Dodge 10
+  - Defend 2
+  - Dodge 10 3
+  - Block 2 3
   targetEffects: []
+  ai: {fileID: 0}

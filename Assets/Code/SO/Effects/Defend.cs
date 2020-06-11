@@ -14,13 +14,19 @@ public class Defend : Effect
     public override void ApplyEffect(Unit actor, Unit target, ref AbilityResultList results)
     {
         //TODO: roll for crit def
+        Vector2Int def = actor.stats.Defense();
         AbilityResult r = new AbilityResult()
         {
+            actor = actor,
             target = target,
-            amount = amount,
+            amount = Mathf.Min(amount, def.y - def.x),
             result = Result.def
         };
         results.targets.Add(r);
-        target.stats.GainArmor(amount);
+    }
+
+    public override string ToString(){
+        return string.Format("Gain {0} <color={1}><b>Defense</b></color>\n", 
+            amount, ColorPallete.GetHexColor("Blue"));
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a11cfdd77166d4ea1f39549b349691, type: 3}
   m_Name: Gold
   m_EditorClassIdentifier: 
-  type: 1
+  itemName: Boxings
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   value: 1
-  max_amount: 1000
+  max_amount: 2000

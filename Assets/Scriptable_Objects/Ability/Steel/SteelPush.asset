@@ -13,15 +13,21 @@ MonoBehaviour:
   m_Name: SteelPush
   m_EditorClassIdentifier: 
   abilityName: Steel Push
-  icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  targetable: {fileID: 11400000, guid: 7c74a8e9ebef18d4c922c027062bceef, type: 2}
   usable: {fileID: 11400000, guid: 7c74a8e9ebef18d4c922c027062bceef, type: 2}
+  targetable: {fileID: 11400000, guid: 7c74a8e9ebef18d4c922c027062bceef, type: 2}
+  metalCost: 5
   isAOE: 0
   isSelf: 0
+  cancelDisplay: 0
+  isRanged: 0
+  usableOutOfComabat: 0
   selfEffects:
-  - Push -1
+  - Push -2
   targetEffects:
-  - Push -1
-  accmod: 85
+  - Push -2
+  - Stun
+  ai: {fileID: 0}
+  accmod: 90
   critmod: 0
   dmgmod: 0.5
+  targetTraits: []

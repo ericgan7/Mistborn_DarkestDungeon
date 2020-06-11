@@ -11,10 +11,19 @@ public class GameState : MonoBehaviour
     public GameController gc;
     public InputController ic;
     public UIController uic;
-    //data loader
+    public AlarmManager am;
+    
+    public MapController map;
+
+    public EventManager dm;
+
+    public HeroRoster hr;
 
     public Team ally;
     public Team enemy;
+
+    public ResourceManager resources;
+
     public Inventory inventory;
     
     void Awake()
@@ -28,6 +37,8 @@ public class GameState : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(this);
         }
-        inventory = new Inventory();
+        SpriteLibrary.Init();
+        resources.load();
+        //EffectLibrary.Init();
     }
 }

@@ -12,22 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa85cb59376a3ff4db9cfbdf6a61a3fc, type: 3}
   m_Name: Steel
   m_EditorClassIdentifier: 
-  characterName: Cointshot(Steel)
-  className: Iron
+  characterName: steel
+  className: Steel
+  portrait: {fileID: 21300000, guid: 15f792a8897aaa144ae4f8e8711daa73, type: 3}
   abilities:
-  - {fileID: 11400000, guid: 46fb3fa507be16a4380ccefc0925c74f, type: 2}
+  - {fileID: 11400000, guid: 6cf3f0733cbe95c478c2021895eb21e1, type: 2}
   - {fileID: 11400000, guid: 356bb1d8db4a36c488e685e35bc3b27a, type: 2}
-  - {fileID: 11400000, guid: 57e5a85c62afe6e489b3dff6387f63d2, type: 2}
-  - {fileID: 11400000, guid: 8b85d4d455a3dde4fb0d0414be2a872b, type: 2}
-  - {fileID: 11400000, guid: 97d69da85d3ce0245ac2842ba1f481f0, type: 2}
-  - {fileID: 11400000, guid: 356bb1d8db4a36c488e685e35bc3b27a, type: 2}
+  - {fileID: 11400000, guid: f94e8293aa6dea043a1282348bd1d042, type: 2}
+  - {fileID: 11400000, guid: 8ad5309b634fffa4583839b221ff59d9, type: 2}
+  movement: {fileID: 11400000, guid: 97d69da85d3ce0245ac2842ba1f481f0, type: 2}
+  equippedItems:
+  - {fileID: 11400000, guid: 52fd9e9b0cb99054f9046baf8ff0b183, type: 2}
+  - {fileID: 0}
+  ctraits:
+  - Steel
   characterClass: {fileID: 11400000, guid: f23ba271fbdaad046b9581c0ece92d28, type: 2}
-  currentWeapon: {fileID: 11400000, guid: 078fa0c53f4058a49a386b774cefd63b, type: 2}
-  health: {x: 5, y: 5}
-  defense: {x: 5, y: 5}
-  will: {x: 5, y: 5}
+  currentWeapon: {fileID: 11400000, guid: bef46a296a57e0b4b992217bb22e1ed0, type: 2}
+  health: 10
+  defense: 5
+  will: 10
   crit: 5
-  acc: 5
-  dmg: {x: 5, y: 5}
+  acc: 10
+  dmg: 3
   speed: 5
   dodge: 5
+  bleedResist: 50
+  stunResist: 30
+  moveResist: 20
+  debuffResist: 40
+  stressResist: 0
+  ai: {fileID: 0}

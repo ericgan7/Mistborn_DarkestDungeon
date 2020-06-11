@@ -6,72 +6,201 @@ public class Stats
 {
     Character character;
     Unit unit;
-    public StatusEffect counter;
-    public List<StatusEffect> modifiers;
+    public StatusEffectManager modifiers;
 
-    public Stats(Character c, Unit u)
+    Vector2Int health;
+    Vector2Int defense;
+    Vector2Int will;
+    Vector2Int damage;
+
+    public Stats(Character c, Unit u, StatusEffectManager manager)
     {
         character = c;
         unit = u;
-        modifiers = new List<StatusEffect>();
+        modifiers = manager;
+        health = new Vector2Int(c.health, c.health);
+        defense = new Vector2Int(c.defense, c.defense);
+        will = new Vector2Int(0, c.will);
+        if (c.currentWeapon == null){
+            damage = new Vector2Int(c.dmg, c.dmg); //TODO placeholder
+        } else 
+        damage = new Vector2Int(c.dmg + c.currentWeapon.damage.x, c.dmg + c.currentWeapon.damage.y);
+    }
+
+    public void Init(){
+        health.y += (int) modifiers.GetStatModifier(StatType.health);
+        health.x = health.y;
+        defense.y+= (int) modifiers.GetStatModifier(StatType.defense);
+        defense.x = defense.y;
     }
 
     public string GetName() { return character.characterName; }
-    public Vector2Int Health() { return character.health; }
-    public Vector2Int Defense() { return character.defense; }
-    public Vector2Int Will() { return character.will; }
-    public int Damage() { return Random.Range(character.dmg.x, character.dmg.y); }
-    public int Crit() { return character.crit; }
-    public int Acc() { return character.acc; }
-    public int Speed() { return character.speed; }
-    public int Dodge() { return character.dodge; }
-    public Ability GetAbilities(int i) { return character.abilities[i]; }
+    public string GetClassName(){ return character.className; }
+    public Vector2Int Health() { return health; }
+    public Vector2Int Defense() { return defense; }
+    public Vector2Int Will() { return will; }
+    public Vector2Int Damage() { 
+        Vector2Int d = damage;
+        d.x += (int) modifiers.GetStatModifier(StatType.damage);
+        d.y += (int) modifiers.GetStatModifier(StatType.damage);
+        return damage; 
+    }
+    public Weapon GetWeapon() { return character.currentWeapon; }
+
+    public int GetStat(StatType type, Unit target = null)
+    {
+        switch (type)
+        {
+            case StatType.damage:
+                return (int) (Random.Range(damage.x, damage.y)
+                    + modifiers.GetStatModifier(type, target));
+            case StatType.acc:
+                return (int)(character.acc + modifiers.GetStatModifier(type));
+            case StatType.crit:
+                return (int)(character.crit + modifiers.GetStatModifier(type));
+            case StatType.dodge:
+                return (int)(character.dodge + modifiers.GetStatModifier(type));
+            case StatType.speed:
+                return (int)(character.speed + modifiers.GetStatModifier(type));
+            case StatType.bleedResist:
+                return (int)(character.bleedResist + modifiers.GetStatModifier(type));
+            case StatType.moveResist:
+                return (int)(character.bleedResist + modifiers.GetStatModifier(type));
+            case StatType.debuffResist:
+                return (int)(character.debuffResist + modifiers.GetStatModifier(type));
+            case StatType.stunResist:
+                return (int)(character.stunResist + modifiers.GetStatModifier(type));
+            case StatType.stressResist:
+                return (int)(character.stressResist + modifiers.GetStatModifier(type));
+        }
+        return 0;
+    }
+
+    public List<Ability> GetAbilities() {
+        List<Ability> abilities = new List<Ability>(character.abilities); 
+        if (character.movement != null){
+            abilities.Add(character.movement);
+        }
+        return abilities;
+    }
+    public List<EquipableItem> GetItems(){
+        return character.equippedItems;
+    }
+    public List<Ability> GetItemAbilities() {
+        List<Ability> itemAbilities = new List<Ability>();
+        Ability ability;
+        foreach(EquipableItem i in character.equippedItems){
+            if (i == null){
+                itemAbilities.Add(null);
+                continue;
+            }
+            ability = i.GetAbility();
+            itemAbilities.Add(ability);
+        }
+        return itemAbilities;
+    }
 
     public void TakeDamage(int amount)
     {
         //armor takes damage
-        if (character.defense.x > amount)
+        if (defense.x > amount)
         {
-            character.defense.x -= amount;
+            defense.x -= amount;
             amount = 0;
         }
-        else if (character.defense.x > 0)
+        else if (defense.x > 0)
         {
-            amount -= character.defense.x;
-            character.defense.x = 0;
+            amount -= defense.x;
+            defense.x = 0;
         }
         //health takes damage
-        character.health.x = Mathf.Clamp(character.health.x - amount, 0, character.health.y);
-        //check if dead
-        //update flag
+        health.x = Mathf.Clamp(health.x - amount, 0, health.y);
+        if (health.x <= 0){
+            Debug.Log(health.x);
+            unit.Die(); 
+        }
     }
     public void Heal(int amount)
     {
-        character.health.x = Mathf.Clamp(character.health.x + amount, 0, character.health.y);
+        health.x = Mathf.Clamp(health.x + amount, 0, health.y);
     }
     public void GainArmor(int amount)
     {
-        character.defense.x = Mathf.Clamp(character.defense.x + amount, 0, character.defense.y);
+        defense.x = Mathf.Clamp(defense.x + amount, 0, defense.y);
+    }
+
+    public bool Block()
+    {
+        if (modifiers.IsBlock)
+        {
+            modifiers.BlockAttack();
+            return true;
+        }
+        return false;
+    }
+
+    public void StressDamage(int amount){
+        will.x = Mathf.Clamp(will.x + amount, 0, will.y);
+        if (will.x == will.y){
+            Debug.Log("Panic");
+            unit.Die();
+        }
     }
 
     public void ApplyDelayedEffect(StatusEffect e)
     {
-        modifiers.Add(e);
+        modifiers.AddEffect(e);
         //animations - buff applyed text, update status bar.
     }
 
-    public void RemoveEffect(StatusEffect e)
-    {
-        modifiers.Remove(e);
-        //TODO update UI to reflect removed effect.
-        unit.UpdateUI();
-    }
-
-    public void CheckCounter(Ability a, Unit attacker, ref AbilityResultList results) {
-        if (counter != null && a.IsAttack)
-        {
-            counter.Counterattack(attacker, this.unit, ref results);
+    public bool OnTurnStart(){
+        if (health.x <= 0){
+            return false;
         }
-
+        int delay = 0;
+        bool startTurn = true;
+        if (modifiers.IsStunned){
+            startTurn = false;
+            modifiers.ClearStun();
+        }
+        int damage = 0;
+        foreach (StatusEffect e in modifiers.Bleed){
+            damage += e.ApplyOverTime(unit);
+        }
+        if (damage > 0){
+            unit.CreatePopUpText(damage.ToString(), ColorPallete.GetColor("Red"));
+            ++delay;
+        }
+        int stress = 0;
+        foreach (StatusEffect e in modifiers.Terror){
+            stress += e.ApplyOverTime(unit);
+        }
+        if (stress > 0){
+            unit.CreatePopUpText(stress.ToString(), ColorPallete.GetColor("Purple"), delay * 0.5f);
+        }
+        modifiers.OnTurnBegin();
+        if (health.x <= 0){
+            return false;
+        }
+        return startTurn;
     }
+
+    public List<Traits> GetTraits(){
+        Debug.Log(character.traits.Count);
+        List<Traits> traits = new List<Traits>(character.traits);
+        return traits;
+    }
+
+    public List<TraitTarget> GetTraitTargets(){
+        List<TraitTarget> traits = new List<TraitTarget>(character.characterClass.attackBonuses);
+        return traits;
+    }
+
+    public void SetAffliction(Affliction affliction){
+        //roll for affliction
+        modifiers.Affliction = affliction;
+        will.x = 0;
+        modifiers.Affliction.OnAffliction(unit);
+    }
+
 }

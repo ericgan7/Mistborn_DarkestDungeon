@@ -13,15 +13,32 @@ MonoBehaviour:
   m_Name: Brass
   m_EditorClassIdentifier: 
   characterName: Brass
-  className: Anon
-  abilities: []
+  className: Brass
+  portrait: {fileID: 21300000, guid: 15f792a8897aaa144ae4f8e8711daa73, type: 3}
+  abilities:
+  - {fileID: 11400000, guid: e64b46d6bc22fb043821d6be2740afa7, type: 2}
+  - {fileID: 11400000, guid: 9a45fb4057d62d14cadaae2ccaf005be, type: 2}
+  - {fileID: 11400000, guid: 4ed12a47736ea73458fb327978a5b8e6, type: 2}
+  - {fileID: 11400000, guid: 3446571c9cffd4748afa85683a68b784, type: 2}
+  movement: {fileID: 11400000, guid: 97d69da85d3ce0245ac2842ba1f481f0, type: 2}
+  equippedItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  ctraits:
+  - Brass
   characterClass: {fileID: 11400000, guid: 3b040b2586e519d4b8896b10c1af7be8, type: 2}
   currentWeapon: {fileID: 11400000, guid: 078fa0c53f4058a49a386b774cefd63b, type: 2}
-  health: {x: 10, y: 10}
-  defense: {x: 10, y: 10}
-  will: {x: 10, y: 10}
-  crit: 0
-  acc: 0
-  dmg: {x: 5, y: 5}
+  health: 15
+  defense: 10
+  will: 10
+  crit: 5
+  acc: 10
+  dmg: 3
   speed: 4
-  dodge: 3
+  dodge: 10
+  bleedResist: 40
+  stunResist: 30
+  moveResist: 20
+  debuffResist: 60
+  stressResist: 0
+  ai: {fileID: 0}

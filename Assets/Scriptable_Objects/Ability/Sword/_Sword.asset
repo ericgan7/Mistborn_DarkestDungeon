@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Sword
   weaponIcon: {fileID: 21300000, guid: a2a9055464fa5d640a4d9993d087007b, type: 3}
+  damage: {x: 1, y: 3}
   weaponAbilities:
-  - {fileID: 11400000, guid: 9785b82714bafa44cad68a88a6d5a32b, type: 2}
-  - {fileID: 11400000, guid: d734b1e29dbdb4a4d964b76138f804b6, type: 2}
-  - {fileID: 11400000, guid: 08056fb234df69b4eb5221d5491efa35, type: 2}
+  - {fileID: 11400000, guid: 4ed12a47736ea73458fb327978a5b8e6, type: 2}
+  - {fileID: 11400000, guid: 9a45fb4057d62d14cadaae2ccaf005be, type: 2}
+  - {fileID: 11400000, guid: d07b80f9df54bdb4da356acb2e99f759, type: 2}
   steelSpecial: {fileID: 0}
   ironSpecial: {fileID: 0}
   tinSpecial: {fileID: 0}
   petwerSpecial: {fileID: 0}
   zincSpecial: {fileID: 0}
-  brassSpecial: {fileID: 0}
+  brassSpecial: {fileID: 11400000, guid: d07b80f9df54bdb4da356acb2e99f759, type: 2}

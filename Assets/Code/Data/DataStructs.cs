@@ -6,11 +6,13 @@ public class CompareUnitSpeed: IComparer<Unit>
 {
     public int Compare(Unit a, Unit b)
     {
-        if (a.stats.Speed() < b.stats.Speed())
+        int aspeed = a.stats.GetStat(StatType.speed);
+        int bspeed = b.stats.GetStat(StatType.speed);
+        if (aspeed < bspeed)
         {
             return -1;
         }
-        else if (a.stats.Speed() > b.stats.Speed())
+        else if (aspeed > bspeed)
         {
             return 1;
         }
@@ -34,15 +36,26 @@ public enum Result
     miss,
     graze,
     dodge,
+    block,
     heal,
     def,
     buff,
     crit,
     defcrit,
+    stress,
+    stressheal,
+    none,
+}
+
+public enum DelayedResult
+{
+    hit,
+    resist
 }
 
 public enum StatType
 {
+    none,
     health,
     defense,
     will,
@@ -50,7 +63,54 @@ public enum StatType
     crit,
     acc,
     speed,
-    dodge
+    dodge,
+    bleedResist,
+    moveResist,
+    stunResist,
+    debuffResist,
+    stressResist,
+}
+
+public enum EffectType
+{
+    //abilities
+    attack,
+    crit,
+    buff,
+    debuff,
+    bleed,
+    stun,
+    none,
+    mark,
+    block,
+    move,
+    guard,
+    stress,
+    //traits
+    ska,
+    noble,
+    baseClass,
+}
+
+public static class EffectName
+{
+    public static string ToString(EffectType type){
+        switch (type){
+            case EffectType.buff:
+                return "Buff";
+            case EffectType.debuff:
+                return "Debuff";
+            case EffectType.bleed:
+                return "Bleed";
+            case EffectType.stun:
+                return "Stun";
+            case EffectType.mark:
+                return "Mark";
+            case EffectType.block:
+                return "Block";
+        }
+        return "";
+    }
 }
 
 public static class StatName
@@ -104,8 +164,7 @@ public static class StatName
     }
 }
 
-public enum ItemType
-{
-    potion,
-    gold,
+public enum GameMode {
+    exploration,
+    combat,
 }

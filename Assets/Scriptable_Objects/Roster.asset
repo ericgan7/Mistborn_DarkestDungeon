@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7733ff06be9c4c54abaffe87b867b6d4, type: 3}
   m_Name: Roster
   m_EditorClassIdentifier: 
-  characterPrefabs:
-  - {fileID: 11400000, guid: 4718667c7a675f646872b8274804df5f, type: 2}
+  enemyPrefabs:
+  - {fileID: 11400000, guid: 3fc93b9609a24d04ead29852c040aab2, type: 2}
   weaponPrefabs: []
   classPrefabs: []
-  currentRoster: []
+  currentRoster:
+  - {fileID: 11400000, guid: 89da5758233bfc645a848f46c96758bc, type: 2}
+  - {fileID: 11400000, guid: 4718667c7a675f646872b8274804df5f, type: 2}
+  selectedCharacters:
+  - {fileID: 11400000, guid: 89da5758233bfc645a848f46c96758bc, type: 2}
+  - {fileID: 11400000, guid: 4718667c7a675f646872b8274804df5f, type: 2}

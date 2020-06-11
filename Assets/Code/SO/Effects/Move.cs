@@ -6,7 +6,17 @@ public class Move : Effect
 {
     public override void ApplyDelayedEffect(Unit actor, Unit target)
     {
+        Debug.Log(actor.Location);
+        Debug.Log(target.Location);
         int distance = target.Location - actor.Location;
-        target.UnitTeam.MoveUnit(target, distance);
+        actor.UnitTeam.MoveUnit(actor, distance);
+    }
+}
+
+public class MoveSelf : Effect{
+    public override void ApplyDelayedEffect(Unit actor, Unit target)
+    {
+        int distance = target.Location - actor.Location;
+        actor.UnitTeam.MoveUnit(actor, distance);
     }
 }

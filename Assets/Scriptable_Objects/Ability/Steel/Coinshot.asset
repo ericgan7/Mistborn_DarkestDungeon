@@ -13,14 +13,19 @@ MonoBehaviour:
   m_Name: Coinshot
   m_EditorClassIdentifier: 
   abilityName: Coinshot
-  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  targetable: {fileID: 11400000, guid: 4d63d3e20506cfd48ba11bab6082d2ee, type: 2}
+  icon: {fileID: 21300000, guid: 15ace5578933596428d240f82dcb792b, type: 3}
+  targetable: {fileID: 11400000, guid: 279d241ce1694f04e8fbd0dd58ca7e0a, type: 2}
   usable: {fileID: 11400000, guid: 694152f00a470154da46b4ef4e5d1282, type: 2}
-  isAOE: 0
+  metalCost: 5
+  isAOE: 1
   isSelf: 0
+  cancelDisplay: 0
+  isRanged: 1
   selfEffects: []
   targetEffects:
-  - Dodge -5
+  - Dodge -5 3
+  ai: {fileID: 0}
   accmod: 90
   critmod: 3
   dmgmod: 1
+  targetTraits: []

@@ -8,7 +8,7 @@ public class Weapon : ScriptableObject
     public string weaponName;
     public Sprite weaponIcon;
     //TODO WeaponStats; damage, speed, acc, stealth
-
+    public Vector2Int damage;
     public List<Ability> weaponAbilities;
     public Ability steelSpecial;
     public Ability ironSpecial;

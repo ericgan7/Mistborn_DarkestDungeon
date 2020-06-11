@@ -5,11 +5,13 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class Alarm : MonoBehaviour, IPointerClickHandler
+public class Alarm : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Image radial;
     public TextMeshProUGUI number;
     public Animator cycleAnim;
+
+    public AlarmManager manager;
 
     public int alarmLevel;
 
@@ -18,14 +20,18 @@ public class Alarm : MonoBehaviour, IPointerClickHandler
     float velocity;
     public int currentRadial;
 
+    public GameObject prefab;
+    GameObject tooltip;
+    GameState state;
+
     public void Awake()
     {
         radial.fillAmount = 0;
-        Debug.Log(radial.fillAmount);
         currentRadial = 0;
         number.text = alarmLevel.ToString();
         cycleAnim = GetComponent<Animator>();
         cycleAnim.enabled = true;
+        state = FindObjectOfType<GameState>();
     }
 
     public void SetAlarmLevel(int change)
@@ -35,6 +41,7 @@ public class Alarm : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator ChangeAlarm(int change)
     {
+        yield return new WaitForSeconds(0.5f);
         velocity = 0;
         while (change > 0)
         {
@@ -49,6 +56,7 @@ public class Alarm : MonoBehaviour, IPointerClickHandler
                 yield return new WaitForSeconds(3.0f);
                 currentRadial = 0;
                 alarmLevel += 1;
+                OnAlarmIncrease();
                 number.text = alarmLevel.ToString();
                 cycleAnim.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
                 cycleAnim.ResetTrigger("cycle");
@@ -79,13 +87,18 @@ public class Alarm : MonoBehaviour, IPointerClickHandler
         yield return null;
     }
 
-    public void OnPointerClick(PointerEventData p)
-    {
-        Debug.Log("Alarm");
-        SetAlarmLevel(1);
-        //++currentRadial;
-        //cycleAnim.SetTrigger("increment");
-        //cycleAnim.ResetTrigger("cycle");
+    void OnAlarmIncrease(){
+        manager.OnAlarmIncrease(alarmLevel);
     }
 
+    public void OnPointerEnter(PointerEventData pointer){
+        tooltip = Instantiate<GameObject> (prefab, transform);
+        TextMeshProUGUI text = tooltip.GetComponentInChildren<TextMeshProUGUI>();
+        EnvironmentBuffs buffs = manager.GetAlarmEffects();
+        text.text = buffs.GetString();
+    }
+
+    public void OnPointerExit(PointerEventData pointer){
+        Destroy(tooltip);
+    }
 }

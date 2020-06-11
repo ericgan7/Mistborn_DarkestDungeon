@@ -11,6 +11,8 @@ public class PopupText : MonoBehaviour
     [SerializeField] Vector3 offset;
     [SerializeField] Vector3 distance;
     Vector3 velocity = Vector3.zero;
+    float alphaVelocity = 0f;
+    float alpha = 0f;
     Vector3 target;
     RectTransform rt;
 
@@ -26,13 +28,19 @@ public class PopupText : MonoBehaviour
     private void Update()
     {
         rt.localPosition = Vector3.SmoothDamp(rt.localPosition, target, ref velocity, duration);
+        text.color = new Color(1, 1, 1, Mathf.SmoothDamp(text.color.a, 0.5f, ref alphaVelocity, duration));
     }
 
-    public void ChangeOffest(Vector3 destination) { offset = destination; }
+    public void SetOffest(Vector3 destination) {
+        rt.localPosition -= offset; //reset to original position
+        offset = destination; 
+        rt.localPosition += offset;
+        target = rt.localPosition + distance;
+    }
 
     public void SetMessage(string message) { text.text = message; }
 
-    public void SetColor(Color messageColor) { text.color = messageColor; }
+    public void SetColor(Color messageColor) { text.faceColor = messageColor; }
 
 
 }

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa85cb59376a3ff4db9cfbdf6a61a3fc, type: 3}
+  m_Name: Crossbowman
+  m_EditorClassIdentifier: 
+  characterName: Crossbowman
+  className: Crossbowman
+  portrait: {fileID: 0}
+  abilities:
+  - {fileID: 11400000, guid: bcaa1f2605eba81429327a2f807d5672, type: 2}
+  - {fileID: 11400000, guid: 310305bff5951b24ba420b14ec794387, type: 2}
+  movement: {fileID: 0}
+  equippedItems: []
+  ctraits: []
+  characterClass: {fileID: 0}
+  currentWeapon: {fileID: 0}
+  health: 5
+  defense: 5
+  will: 5
+  crit: 10
+  acc: 10
+  dmg: 3
+  speed: 2
+  dodge: 5
+  bleedResist: 20
+  stunResist: 10
+  moveResist: 10
+  debuffResist: 20
+  stressResist: 20
+  ai: {fileID: 11400000, guid: 357be2f1d001e8744bb71f73152ca770, type: 2}

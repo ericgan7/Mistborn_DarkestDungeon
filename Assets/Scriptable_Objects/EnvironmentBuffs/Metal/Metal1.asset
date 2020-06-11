@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02981d6bfac98f547b34dd210b4c3074, type: 3}
+  m_Name: Metal1
+  m_EditorClassIdentifier: 
+  stress: 0
+  allyEffects: []
+  enemyEffects: []
+  allySupriseMod: 0
+  enemySupriseMod: 0
+  lootMod: 0
+  metalMod: 0
+  level: 25

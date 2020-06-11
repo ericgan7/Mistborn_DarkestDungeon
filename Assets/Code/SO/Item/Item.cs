@@ -5,27 +5,59 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Gold")]
 [System.Serializable]
 public class Item : ScriptableObject
-{
-    public ItemType type;
+{   
+    public string itemName;
     public Sprite icon;
     public int value;
     public int max_amount;
-    public virtual bool IsUsable { get { return false; } }
+    public virtual bool IsUsable (Unit currrent, bool isCombat = true) {return false;}
+    public virtual bool IsEquipable { get {return false;}}
 
-    public virtual void UseItem(Unit target)
-    {
-
+    public override string ToString(){
+        return string.Format("{0}\nValue: {1}\n", itemName, value);
     }
 }
 
 public abstract class UsableItem : Item
 {
-    public override bool IsUsable => true;
     public bool IsSelf;
+    public abstract void UseItem(Unit target, GameState gs);
 }
 
-public class ItemInstance
+[CreateAssetMenu(menuName="Test/ItemInstance")]
+public class ItemInstance : ScriptableObject
 {
-    public Item item;
+    public Item itemType;
     public int amount;
+    public ItemInstance(Item i, int a)
+    {
+        itemType = i;
+        amount = a;
+    }
+
+    public int AddAmount(int additionalAmount)
+    {
+        amount += additionalAmount;
+        if (amount > itemType.max_amount)
+        {
+            return amount - itemType.max_amount;
+        }
+        return 0;
+    }
+
+    public bool RemoveAmount(int removedAmount){
+        amount -= removedAmount;
+        if (amount > 0){
+            return true;
+        }
+        return false;
+    }
+
+    public int UseItem(Unit currentUnit, GameState gs){
+        if (itemType.IsUsable(currentUnit, true)){
+            ((UsableItem)itemType).UseItem(currentUnit, gs);
+            --amount;
+        }
+        return amount;
+    }
 }

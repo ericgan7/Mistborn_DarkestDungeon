@@ -16,5 +16,6 @@ MonoBehaviour:
   classIcon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
   classAbilities:
   - {fileID: 11400000, guid: f94e8293aa6dea043a1282348bd1d042, type: 2}
-  - {fileID: 11400000, guid: 6cb3b902d50c6124aa2aec5363ea4129, type: 2}
   - {fileID: 11400000, guid: 356bb1d8db4a36c488e685e35bc3b27a, type: 2}
+  - {fileID: 11400000, guid: e596aeb4a74030a4a9573df27369485c, type: 2}
+  - {fileID: 11400000, guid: 6cb3b902d50c6124aa2aec5363ea4129, type: 2}

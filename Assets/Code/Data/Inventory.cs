@@ -2,41 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Test/Inventory")]
 [System.Serializable]
-public class Inventory
+public class Inventory : ScriptableObject
 {
     public List<ItemInstance> items;
 
-    public Inventory()
-    {
-        items = new List<ItemInstance>();
+    public void UpdateInventory(List<ItemSlot> slots){
+
     }
 
-    public void AddItem(ItemInstance newItem)
-    {
-        foreach( ItemInstance i in items)
-        {
-            if (i.item.type == newItem.item.type)
-            {
-                i.amount += newItem.amount;
-                return;
+    public bool Contains(Item item){
+        foreach(ItemInstance i in items){
+            if (i.itemType == item){
+                return true;
             }
         }
-        items.Add(newItem);
+        return false;
     }
 
-    public void RemoveItem(Item oldItem, int amount)
-    {
-        foreach (ItemInstance i in items)
-        {
-            if (i.item.type == oldItem.type)
-            {
-                i.amount -= amount;
-                if (i.amount == 0)
-                {
-                    items.Remove(i);
-                }
-                return;
+    public void UseItem(Item item){
+        foreach(ItemInstance i in items){
+            if (i.itemType == item){
+                i.RemoveAmount(1);
             }
         }
     }

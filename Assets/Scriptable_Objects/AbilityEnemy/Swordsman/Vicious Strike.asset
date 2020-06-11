@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08198c06f6adc1b41a33a2565211fcfd, type: 3}
+  m_Name: Vicious Strike
+  m_EditorClassIdentifier: 
+  abilityName: Vicious Strike
+  usable: {fileID: 11400000, guid: 279d241ce1694f04e8fbd0dd58ca7e0a, type: 2}
+  targetable: {fileID: 11400000, guid: 7c74a8e9ebef18d4c922c027062bceef, type: 2}
+  metalCost: 0
+  isAOE: 0
+  isSelf: 0
+  cancelDisplay: 0
+  isRanged: 0
+  selfEffects: []
+  targetEffects:
+  - Bleed 3 3
+  ai: {fileID: 11400000, guid: 1367e81b12059ea49b1b8cfd8df1d3a9, type: 2}
+  accmod: 85
+  critmod: 0
+  dmgmod: 1
+  targetTraits: []

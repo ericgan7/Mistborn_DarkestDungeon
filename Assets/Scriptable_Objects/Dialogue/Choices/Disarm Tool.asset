@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c28da19cbc124341ad650a31fa2227b, type: 3}
+  m_Name: Disarm Tool
+  m_EditorClassIdentifier: 
+  choiceId: 0
+  text: Use a disarm kit
+  endOfDialogue: 1
+  startCombat: 0
+  startMap: 0
+  reward: []
+  failure: []
+  nextDialogue: {fileID: 0}
+  statRoll: 0
+  requiredRoll: 0
+  requiredItem: {fileID: 11400000, guid: 409b120e979fac84db8be0a82e6ffa8b, type: 2}

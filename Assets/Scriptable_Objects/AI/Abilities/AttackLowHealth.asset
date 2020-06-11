@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 867227581b416b54694791c0839a5d46, type: 3}
+  m_Name: AttackLowHealth
+  m_EditorClassIdentifier: 
+  targetDesires:
+  - {fileID: 11400000, guid: 283fd724f69b76049a702322ed7cef7e, type: 2}
+  - {fileID: 11400000, guid: fa8566ccdc067e7419d75c5c259a4546, type: 2}

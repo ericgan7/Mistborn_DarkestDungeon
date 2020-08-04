@@ -15,17 +15,21 @@ MonoBehaviour:
   abilityName: Steel Push
   usable: {fileID: 11400000, guid: 7c74a8e9ebef18d4c922c027062bceef, type: 2}
   targetable: {fileID: 11400000, guid: 7c74a8e9ebef18d4c922c027062bceef, type: 2}
-  metalCost: 5
+  metalCost: 1
+  ammoCost: 0
   isAOE: 0
   isSelf: 0
   cancelDisplay: 0
   isRanged: 0
   usableOutOfComabat: 0
+  actorParticles: {fileID: 0}
   selfEffects:
   - Push -2
   targetEffects:
   - Push -2
   - Stun
+  spriteType: 0
+  targetPartcles: {fileID: 0}
   ai: {fileID: 0}
   accmod: 90
   critmod: 0

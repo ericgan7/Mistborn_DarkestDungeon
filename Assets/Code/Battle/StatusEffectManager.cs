@@ -6,11 +6,10 @@ public class StatusEffectManager: MonoBehaviour
 {
     public StatusIcon prefab;
     public List<StatusIcon> icons;
-    public Unit unit;
+    [SerializeField] Unit unit;
     GameState state;
 
     List<Traits> traits;
-    Affliction affliction;
     List<StatusEffect> modifiers;
     List<StatusEffect> bleed;
     List<StatusEffect> terror;
@@ -24,7 +23,7 @@ public class StatusEffectManager: MonoBehaviour
     public bool IsBlock { get { return block != null; } }
     public bool IsGuard { get { return guard != null; } }
     public bool IsBleed { get { return bleed.Count > 0; }}
-    public bool CanBuff { get { return affliction == null || affliction.CanBuff; }}
+    public bool CanBuff { get { return Affliction == null || Affliction.CanBuff; }}
     public List<StatusEffect> Modifiers { get { return modifiers; } }
     public List<StatusEffect> Bleed { get { return bleed; } }
     public List<StatusEffect> Terror { get { return terror; } }
@@ -33,22 +32,31 @@ public class StatusEffectManager: MonoBehaviour
     public StatusEffect Mark { get { return mark; } }
     public Block Block { get { return block; } }
     public Guard Guard { get { return guard; } }
-    public Affliction Affliction { get { return affliction; } set {}}
+    public Affliction Affliction { get; set; }
 
     public void Awake()
     {
+        if (traits == null){
+            Init();
+        }
+    }
+    
+    void Init(){
         icons = new List<StatusIcon>();
         modifiers = new List<StatusEffect>();
         bleed = new List<StatusEffect>();
         traits = new List<Traits>();
         terror = new List<StatusEffect>();
         state = FindObjectOfType<GameState>();
-        unit = GetComponentInParent<Unit>();
         //initialize traits from unit character
-        affliction = null;
+        Affliction = null;
     }
 
     public void SetCharacter(Character c){
+        if (traits == null){
+            Init();
+        }
+        traits.Clear();
         traits.AddRange(c.traits);
         foreach(Traits t in traits){
             if (t.Type == EffectType.baseClass){
@@ -225,11 +233,14 @@ public class StatusEffectManager: MonoBehaviour
     public float GetStatModifier(StatType type, Unit target = null)
     {
         float amount = 0;
+        if (unit.UnitTeam == null){
+            return 0; //curios and events have no team;
+        }
         foreach(StatusEffect e in modifiers)
         {
             amount += e.GetStat(type);
         }
-        foreach (StatusEffect e in state.am.GetMetalEffects().GetEffects(unit.UnitTeam)){
+        foreach (StatusEffect e in state.metal.GetMetalEffects().GetEffects(unit.UnitTeam)){
             amount += e.GetStat(type);
         }
         foreach (StatusEffect e in state.am.GetAlarmEffects().GetEffects(unit.UnitTeam)){
@@ -246,8 +257,8 @@ public class StatusEffectManager: MonoBehaviour
         foreach(Traits t in traits){
             amount += t.GetStat(type, unit, target);
         }
-        if (affliction != null){
-            amount += affliction.GetStat(type);
+        if (Affliction != null){
+            amount += Affliction.GetStat(type);
         }
         return amount;
     }
@@ -306,6 +317,23 @@ public class StatusEffectManager: MonoBehaviour
     public void AttackModifiers(Ability_Attack a, Unit actor, Unit target, ref AbilityResultList results){
         foreach(Traits t in traits){
             t.ModifyAttack(a, actor, target, ref results);
+        }
+    }
+
+    public bool HasEffect(EffectType type){
+        switch(type){
+            case EffectType.bleed:
+                return bleed.Count > 0;
+            case EffectType.debuff:
+                foreach (StatusEffect s in modifiers)
+                {
+                    if (s.Type == EffectType.debuff){
+                        return true;
+                    }
+                }
+                return false;
+            default:
+                return true;
         }
     }
 

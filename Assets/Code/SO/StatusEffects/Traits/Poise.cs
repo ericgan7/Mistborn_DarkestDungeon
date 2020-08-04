@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Poise : Traits
 {
+    public override string traitName => "Poise";
     int accuracy;
     int crit;
 

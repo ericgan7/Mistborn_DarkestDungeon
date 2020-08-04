@@ -14,14 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Lurcher
   className: Iron
-  abilities: []
-  characterClass: {fileID: 0}
-  currentWeapon: {fileID: 0}
-  health: {x: 0, y: 0}
-  defense: {x: 0, y: 0}
-  will: {x: 0, y: 0}
-  crit: 0
-  acc: 0
-  dmg: {x: 0, y: 0}
-  speed: 0
-  dodge: 0
+  abilities:
+  - {fileID: 11400000, guid: 80026dfc7fe4c694d9688793b26aa1d2, type: 2}
+  - {fileID: 11400000, guid: 5fe59ef516f0a564ba754c0162dde22c, type: 2}
+  - {fileID: 11400000, guid: 306399346b48483439329caca8375d86, type: 2}
+  - {fileID: 11400000, guid: 2585566d350be2a42b0427120c5fc170, type: 2}
+  movement: {fileID: 11400000, guid: 97d69da85d3ce0245ac2842ba1f481f0, type: 2}
+  equippedItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  ctraits:
+  - Iron
+  characterClass: {fileID: 11400000, guid: ccefc117260ded544a1dc2e707bc3369, type: 2}
+  currentWeapon: {fileID: 11400000, guid: 4c5a64f82e6d53a4186f7fed50e4098a, type: 2}
+  weapons:
+  - {fileID: 11400000, guid: 4c5a64f82e6d53a4186f7fed50e4098a, type: 2}
+  - {fileID: 11400000, guid: 2e78a94bf58e5594bb18eed40bd4b5f0, type: 2}
+  health: 15
+  defense: 10
+  will: 10
+  crit: 10
+  acc: 5
+  dmg: 2
+  speed: 1
+  dodge: 5
+  bleedResist: 20
+  stunResist: 30
+  moveResist: 30
+  debuffResist: 50
+  stressResist: 1
+  virtue: 0
+  ai: {fileID: 0}

@@ -52,12 +52,15 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     public Image background;
     public Image transition;
     public float transitionTime;
-    public EventObject eventObject;
     bool canScroll;
 
     public bool loadLevel;
     public MapLayout level;
     public Room prefab;
+
+    public bool CanMove {get; set;}
+    float elapsed;
+
     static List<Vector2Int> offsets = new List<Vector2Int> {
         new Vector2Int(0, 1),
         new Vector2Int(0, -1),
@@ -65,7 +68,6 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         new Vector2Int(-1, 0),
     };
 
-    public List<Vector2Int> test;
     public void Awake()
     {
         rooms = new Dictionary<Vector2Int, Room>();
@@ -73,6 +75,8 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         state = FindObjectOfType<GameState>();
         state.map = this;
         patrols = new List<MapUnit>(units.GetComponentsInChildren<MapUnit>());
+        CanMove = true;
+        elapsed = 0f;
     }
     
     void Start(){
@@ -88,11 +92,14 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     }
 
     public void LoadLevel(MapLayout layout){
-        foreach(Vector2Int v in level.rooms){
+        for (int i = 0; i < layout.rooms.Count; ++i){
             Room r = Instantiate<Room>(prefab, map.transform);
-            r.SetPostion(v);
+            r.SetPostion(layout.rooms[i]);
             r.map = this;
-            rooms.Add(v, r);
+            if (i < layout.events.Count){
+                r.SetEvent(layout.events[i]);
+            }
+            rooms.Add(layout.rooms[i], r);
         }
         foreach(MapUnit u in patrols){
             //placeholder set up
@@ -102,6 +109,11 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         units.transform.parent = gameObject.transform;
         units.transform.parent = map.transform;
     }
+
+    public void SetUpRoom(EventDialogue eventDialogue){
+        state.gc.SetEventUnit(eventDialogue);
+        StartCoroutine(BackgroundEnterRoom());
+    }
     
     public Room GetRoom(Vector2Int coord){
         return rooms[coord];
@@ -109,11 +121,6 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void Open(){
         gameObject.SetActive(true);
-    }
-
-    public void StartEvent(Event dialogue){
-        state.dm.Open(dialogue);
-        gameObject.SetActive(false);
     }
 
     public void UpdateMapState(){
@@ -173,24 +180,25 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void MoveToRoom(Room selected)
     {
+        if (!CanMove){
+            return;
+        }
         if (player.location.IsNear(selected))
         {
-            StartCoroutine(BackgroundTransition(selected.backgroundImage));
+            StartCoroutine(BackgroundExitRoom(selected.backgroundImage));
             player.MoveToRoom(selected);
             state.am.IncreaseAlarm();
             UpdateMapState();
         }
-        if (selected.enterEvent){
-            eventObject.SetEvent(selected.enterEvent);
-        }
         else {
-            eventObject.gameObject.SetActive(false);
+            //eventObject.gameObject.SetActive(false);
         }
     }
 
-    public IEnumerator BackgroundTransition(Sprite newImage)
+    public IEnumerator BackgroundExitRoom(Sprite newImage)
     {
-        float elapsed = 0f;
+        CanMove = false;
+        elapsed = 0f;
         Color current = Color.black;
         while (elapsed < transitionTime){
             elapsed += Time.deltaTime;
@@ -199,17 +207,22 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
             yield return new WaitForEndOfFrame();
         }
         background.sprite = newImage;
+    }
+
+    public IEnumerator BackgroundEnterRoom(){
         foreach (Unit u in state.ally.GetUnits()){
             u.SetPosScale(state.ally.positions[2], Vector3.one);
             u.ResetPosition();
         }
         elapsed = 0f;
+        Color current = Color.black;
         while (elapsed < transitionTime){
             elapsed += Time.deltaTime;
             current.a = Mathf.Lerp(1, 0, elapsed / transitionTime); //fade out black
             transition.color = current;
             yield return new WaitForEndOfFrame();
         }
+        CanMove = true;
         yield return new WaitForSeconds(0.5f);
         //start enemy turn;
         EnemyTurn();
@@ -217,7 +230,7 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void EnemyEntrance(){
         foreach (Unit u in state.enemy.GetUnits()){
-            u.SetPosScale(state.ally.positions[2], Vector3.one);
+            u.SetPosScale(state.enemy.positions[3], Vector3.one);
             u.ResetPosition();
         }
     }
@@ -279,6 +292,9 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     }
 
     public void EnemyTurn(){
+        if (state.gc.mode == GameMode.combat){
+            return;
+        }
         foreach(MapUnit u in patrols){
             if (u.isPlayer){
                 continue;

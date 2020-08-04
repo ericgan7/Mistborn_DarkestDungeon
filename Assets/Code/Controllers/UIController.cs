@@ -14,12 +14,11 @@ public class UIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI characterName;
     public TextMeshProUGUI[] stats;
 
-    public List<Unit> unitTargets;
-
     public Slider currentTurn;
 
     public ActionDisplay action;
     public GameObject background;
+    public AfflictionDisplay affliction;
 
     public AlarmManager alarm;
 
@@ -45,6 +44,15 @@ public class UIController : MonoBehaviour
         currentCharacter = current;
         foreach(Unit u in state.ally.GetUnits()){
             u.SetTargetState(TargetedState.Untargeted);
+            u.SetHealthChange(Vector2Int.zero);
+            u.SetStressChange(0);
+            u.SetToolTip(null, null);
+        }
+        foreach(Unit u in state.enemy.GetUnits()){
+            u.SetTargetState(TargetedState.Untargeted);
+            u.SetHealthChange(Vector2Int.zero);
+            u.SetStressChange(0);
+            u.SetToolTip(null, null);
         }
         currentCharacter.SetTargetState(TargetedState.Current);
         abilityMenu.SetUnit(current);
@@ -66,18 +74,27 @@ public class UIController : MonoBehaviour
    
     public void DeselectAbility()
     {
-        for (int i = 0; i < unitTargets.Count; ++i)
-        {
-            unitTargets[i].SetTargetState(TargetedState.Untargeted);
-            unitTargets[i].SetToolTip(null, null);
+        foreach (Unit u in state.ally.GetUnits()){
+            u.SetTargetState(TargetedState.Untargeted);
+            u.SetHealthChange(Vector2Int.zero);
+            u.SetStressChange(0);
+            u.SetToolTip(null, null);
+        }
+        foreach (Unit u in state.enemy.GetUnits()){
+            u.SetTargetState(TargetedState.Untargeted);
+            u.SetHealthChange(Vector2Int.zero);
+            u.SetStressChange(0);
+            u.SetToolTip(null, null);
         }
         currentCharacter.SetTargetState(TargetedState.Current);
     }
 
     public void ResetTargetState()
     {
-        foreach (Unit u in unitTargets)
-        {
+        foreach (Unit u in state.ally.GetUnits()){
+            u.SetTargetState(TargetedState.Untargeted);
+        }
+        foreach (Unit u in state.enemy.GetUnits()){
             u.SetTargetState(TargetedState.Untargeted);
         }
     }
@@ -128,12 +145,7 @@ public class UIController : MonoBehaviour
     }
 
     public void ToggleMenu(string menu){
-        switch(menu){
-            case "Ability":
-            case "Map":
-                ability_map.SelectToggle(menu);
-                break;
-        }
+        ability_map.SelectToggle(menu);
     }
 
     public void SetCharacterMenu(Unit focus, Character character){
@@ -144,5 +156,4 @@ public class UIController : MonoBehaviour
     public void OpenGameOverMenu(){
         menu.SetActive(true);
     }
-
 }

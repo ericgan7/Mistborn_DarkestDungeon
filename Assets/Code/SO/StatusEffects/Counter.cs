@@ -20,7 +20,7 @@ public class Counter : StatusEffect
         {
             target = target,
             amount = (int)(target.stats.GetStat(StatType.damage) * multiplier),
-            result = Result.hit
+            result = Result.Hit
         };
         actor.stats.TakeDamage(r.amount);
         results.counter.Add(r);

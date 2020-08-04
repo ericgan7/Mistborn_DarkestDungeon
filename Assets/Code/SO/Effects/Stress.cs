@@ -4,26 +4,35 @@ using UnityEngine;
 
 public class Stress : Effect
 {
+    public override EffectType Type => EffectType.stress;
+    public override bool IsStress => true;
     int stressAmount;
+
     public Stress(int amount){
         stressAmount = amount;
     }
 
-    public override void ApplyEffect(Unit actor, Unit target, ref AbilityResultList results)
-    {
-        AbilityResult r = new AbilityResult()
-        {
-            actor = actor,
-            target = target,
-            amount = stressAmount,
-            result = stressAmount < 0 ? Result.stress : Result.stressheal
-        };
-        results.targets.Add(r);
-        target.stats.StressDamage(stressAmount);
+    public override int GetAmount(){
+        return stressAmount;
     }
 
+    public override void ApplyEffect(Unit actor, Unit target, ref AbilityResultList results)
+    {
+        DelayedAbilityResult r = new DelayedAbilityResult()
+        {
+            target = target,
+            delayedEffect = this,
+            result = DelayedResult.hit,
+        };
+        results.stress.Add(r);
+    }
+
+    public override void ApplyDelayedEffect(Unit actor, Unit target){
+        target.stats.StressDamage(StressDamage(target));
+    }
     public int StressDamage(Unit target){
-        return stressAmount - target.stats.GetStat(StatType.stressResist) ;
+        //TODO consider moving the extra stress damage into stats.stressdamage
+        return stressAmount;
     }
 
     public override string ToString(Unit target){

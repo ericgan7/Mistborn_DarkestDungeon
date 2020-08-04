@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: _Brass
   m_EditorClassIdentifier: 
   className: Brass
-  classIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  classIcon: {fileID: 21300000, guid: d0ce30c13be9c0141a340c8c1cd5eba5, type: 3}
   classAbilities:
   - {fileID: 11400000, guid: de8f6b2c068d2904c8cd1511c2c57546, type: 2}
   - {fileID: 11400000, guid: af75692023d2e5f489661b35e6297f77, type: 2}
   - {fileID: 11400000, guid: 3446571c9cffd4748afa85683a68b784, type: 2}
   - {fileID: 11400000, guid: e64b46d6bc22fb043821d6be2740afa7, type: 2}
+  description: Soothers are mistings with the ability to burn brass. They can manipulate
+    and lessen the emotions of others. They can lessen the pain of others and keep
+    them from panicking, Theycan also distract the enemy and render them sluggish
+    and slow.

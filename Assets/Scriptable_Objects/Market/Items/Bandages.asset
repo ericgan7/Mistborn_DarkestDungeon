@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93796ddb61534c245958225fd282f976, type: 3}
+  m_Name: Bandages
+  m_EditorClassIdentifier: 
+  itemName: Bandages
+  icon: {fileID: 21300000, guid: e9b1867fdf2a08442a922c34df47e840, type: 3}
+  value: 20
+  max_amount: 4
+  effectTarget: 4
+  effect: {fileID: 11400000, guid: 1567f64fd568efa4c801ef4e9e509557, type: 2}
+  isUsbleInCombat: 1

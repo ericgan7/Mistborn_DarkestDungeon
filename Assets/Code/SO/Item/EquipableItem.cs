@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Trinket")]
 public class EquipableItem: Item {
     public override bool IsEquipable => true;
-    public Ability itemAbilty;
+    public Ability effect;
+
     public List<string> itemStats;
     public List<StatusEffect> stats;
 
@@ -21,7 +22,7 @@ public class EquipableItem: Item {
     }
 
     public Ability GetAbility(){
-        return itemAbilty;
+        return effect;
     }
 
     public override string ToString(){
@@ -29,8 +30,8 @@ public class EquipableItem: Item {
         foreach (StatusEffect e in GetStats()){
             description += string.Format("{0}\n", e.ToString());
         }
-        if (itemAbilty != null){
-            description += string.Format("Adds Ability: {0}\n", itemAbilty.abilityName);
+        if (effect != null){
+            description += string.Format("Adds Ability: {0}\n", effect.abilityName);
         }
         description += string.Format("Value: {0}\n", value);
         return description;

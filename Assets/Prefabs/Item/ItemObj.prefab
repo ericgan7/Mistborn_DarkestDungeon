@@ -73,8 +73,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294045932
+  m_fontColor: {r: 0.9254902, g: 0.9411765, b: 0.94509804, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -259,12 +259,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 3321382939955339053}
-  count: {fileID: 1639965295450545913}
-  item: {fileID: 0}
-  slot: {fileID: 0}
-  rt: {fileID: 0}
   tooltip: {fileID: 3774881839672229348}
   background: {fileID: 6094789937510804278}
+  count: {fileID: 1639965295450545913}
+  rt: {fileID: 3528512577419342000}
+  isLimited: 1
 --- !u!1 &4453535555884865580
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+  m_Color: {r: 0.17254902, g: 0.24313726, b: 0.3137255, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

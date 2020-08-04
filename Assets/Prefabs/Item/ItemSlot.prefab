@@ -86,8 +86,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948e28e1e51dd6b449d25d5980a8f326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  background: {fileID: 0}
+  background: {fileID: 5233214154845869774}
   currentItem: {fileID: 0}
+  slotId: 0
   temporary: 0
-  tempParent: {fileID: 0}
   equipOnly: 0
+  parentTray: {fileID: 0}
+  rectTransform: {fileID: 3582005842698110018}

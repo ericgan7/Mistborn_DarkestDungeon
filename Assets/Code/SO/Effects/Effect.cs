@@ -9,6 +9,7 @@ public abstract class Effect
     public virtual bool IsHeal { get { return false; } }
     public virtual bool IsDamage { get { return false; } }
     public virtual bool IsMove { get { return false; } }
+    public virtual bool IsStress { get { return false; } }
 
     public virtual EffectType Type { get { return EffectType.none; } }
     protected static Dictionary<EffectType, StatType> ResistType =
@@ -46,6 +47,10 @@ public abstract class Effect
     }
 
     public virtual void ApplyDelayedEffect(Unit actor, Unit target) { }
+
+    public virtual int GetAmount(){
+        return 0;
+    }
 
     public virtual string ToString(Unit target) { return this.ToString(); }
 }

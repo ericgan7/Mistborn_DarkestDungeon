@@ -21,15 +21,15 @@ public class Affliction_Abusive : Affliction
         int damage = actor.stats.GetStat(StatType.damage);
 
         yield return new WaitForSeconds(0.5f);
-        actor.SetSprite(string.Format("{0}_Counter", actor.stats.GetClassName()));
+        actor.SetSprite(string.Format("{0}_Counter", actor.stats.GetSpriteHeader()));
         Debug.Log(targets[t].stats.GetClassName());
         targets[t].stats.TakeDamage(damage);
-        targets[t].SetSprite(string.Format("{0}_Hurt", targets[t].stats.GetClassName()));
+        targets[t].SetSprite(string.Format("{0}_Hurt", targets[t].stats.GetSpriteHeader()));
         targets[t].CreatePopUpText(damage.ToString(), Color.red);
         yield return new WaitForSeconds(1.0f);
 
-        actor.SetSprite(string.Format("{0}_Default", actor.stats.GetClassName()));
-        targets[t].SetSprite(string.Format("{0}_Default", targets[t].stats.GetClassName()));
+        actor.SetSprite(string.Format("{0}_Default", actor.stats.GetSpriteHeader()));
+        targets[t].SetSprite(string.Format("{0}_Default", targets[t].stats.GetSpriteHeader()));
         yield return base.StressTeam(actor);
     }
 

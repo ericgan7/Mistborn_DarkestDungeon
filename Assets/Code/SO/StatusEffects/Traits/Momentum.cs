@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Momentum : Traits
 {
+    public override string traitName => "Momentum";
     int stacks;
     bool hasMoved;
 
@@ -41,7 +42,7 @@ public class Momentum : Traits
 
     public override string ToString(){
         return string.Format(
-            "{0} <color={5}><b>Momentum</b></color>: +{1} Dodge, +{2} Damage per stack (+{3} Dodge, +{4} Damage)\n",
+            "{0} <color={5}><b>Momentum</b></color>: Gain 1 stack when moving. Gives +{1} Dodge, +{2} Damage per stack.\n",
             stacks, dodge, damage, stacks*dodge, stacks*damage,
             ColorPallete.GetHexColor("Highlight Teal"));
     }

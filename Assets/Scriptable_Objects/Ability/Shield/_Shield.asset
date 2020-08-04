@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64d91897bc15af44b9d4c64b60caee6, type: 3}
   m_Name: _Shield
   m_EditorClassIdentifier: 
-  weaponName: 
-  weaponIcon: {fileID: 0}
+  weaponName: Shield
+  weaponIcon: {fileID: 21300000, guid: d59138c6017ce99408f03577d8c180a1, type: 3}
   damage: {x: 0, y: 0}
-  weaponAbilities: []
+  weaponAbilities:
+  - {fileID: 11400000, guid: 2585566d350be2a42b0427120c5fc170, type: 2}
+  - {fileID: 11400000, guid: 65e9e2854cce8ce47b6f7f37936dacfb, type: 2}
   steelSpecial: {fileID: 0}
-  ironSpecial: {fileID: 0}
+  ironSpecial: {fileID: 11400000, guid: 443abdc812a015f4f85f91f78e7abe6d, type: 2}
   tinSpecial: {fileID: 0}
-  petwerSpecial: {fileID: 0}
+  petwerSpecial: {fileID: 11400000, guid: 9e32bfa7e115214419519a7dbca5a84f, type: 2}
   zincSpecial: {fileID: 0}
   brassSpecial: {fileID: 0}
+  description: Wields a shield. Offers great protection that can be used to get in
+    close and disrupt enemy plans.

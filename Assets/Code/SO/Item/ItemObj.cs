@@ -6,51 +6,50 @@ using UnityEngine.UI;
 using TMPro;
 
 public class ItemObj : MonoBehaviour,
-    IPointerDownHandler, IPointerUpHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
-    public Image icon;
-    public TextMeshProUGUI count;
-    public ItemInstance item;
-
-    public ItemSlot slot;
-    GameState state;
-    GraphicRaycaster raycaster;
-    bool isDragging;
-    public RectTransform rt;
+    [SerializeField] protected Image icon;
     [SerializeField] TextMeshProUGUI tooltip;
     [SerializeField] RectTransform background;
+    [SerializeField] protected TextMeshProUGUI count;
+    [SerializeField] protected RectTransform rt;
+    [SerializeField] bool isLimited;
 
-    public void Awake()
-    {
-        icon = GetComponent<Image>();
-        count = GetComponentInChildren<TextMeshProUGUI>();
-        rt = GetComponent<RectTransform>();
-        slot = GetComponentInParent<ItemSlot>();
-        slot.currentItem = this;
-        state = FindObjectOfType<GameState>();
-        background.gameObject.SetActive(false);
+    protected Item item;
+    public ItemSlot parentSlot;
+    protected int amount;
+    protected GraphicRaycaster raycaster;
+
+    public Item Item {get { return item;} }
+    public ItemSlot Slot {get {return parentSlot; }}
+
+
+    public void SetRaycaster(GraphicRaycaster caster){
+        raycaster = caster;
     }
 
-    void Start(){
-        raycaster = FindObjectOfType<GameState>().uic.uiRayCaster;
-    }
-
-    public void UpdateItem(ItemInstance itemInstance)
+    public void UpdateItem(ItemAmount instance)
     {
-        if (itemInstance.itemType){
-            item = itemInstance;
-            icon.sprite = item.itemType.icon;
-            gameObject.SetActive(true);
-        }
-        else {
-            gameObject.SetActive(false);
-        }
-        if (item == null){
+        if (instance == null || instance.item == null){
+            Debug.Log("disabled");
             count.text = "";
-        }else {
-            count.text = item.amount.ToString();
+            icon.enabled = false;
+            return;
         }
+        item = instance.item;
+        icon.sprite = item.icon;
+        icon.enabled = true;
+        amount = instance.amount;
+        count.text = instance.amount.ToString();
+        SetTooltip();
+    }
+
+    public virtual void UpdateItem(Item newItem, int newAmount){
+        item = newItem;
+        icon.sprite = newItem.icon;
+        icon.enabled = true;
+        amount = newAmount;
+        count.text = amount.ToString();
         SetTooltip();
     }
 
@@ -60,48 +59,12 @@ public class ItemObj : MonoBehaviour,
             tooltip.text = "";
         }
         else {
-            tooltip.text = item.itemType.ToString();
+            tooltip.text = item.ToString();
         }
         background.sizeDelta = new Vector2(LayoutUtility.GetPreferredWidth(tooltip.rectTransform),
                                             LayoutUtility.GetPreferredHeight(tooltip.rectTransform));
         background.gameObject.SetActive(false);
     }
-
-    void Update(){
-        if (isDragging){
-            rt.position = Input.mousePosition;
-        }
-    }
-    public void OnPointerDown(PointerEventData p)
-    {
-        if (p.button == PointerEventData.InputButton.Left){
-            isDragging = true;
-            Debug.Log("DRAG ITEM");
-        } else if(p.button == PointerEventData.InputButton.Right &&
-        state.gc.currentUnit.UnitTeam.isAlly){
-            int amount = item.UseItem(state.gc.currentUnit, state);
-            if (amount == 0){
-                slot.currentItem = null;
-                Destroy(gameObject);
-            } else {
-                count.text = amount.ToString();
-            }
-        }
-    }
-
-    public void OnPointerUp(PointerEventData p){
-        isDragging = false;
-        List<RaycastResult> results = new List<RaycastResult>();
-        raycaster.Raycast(p, results);
-        foreach (RaycastResult r in results){
-            ItemSlot s = r.gameObject.GetComponent<ItemSlot>();
-            if (s != null && s != slot){
-                slot.SwapItems(s);
-                return;
-            }
-        }
-        slot.UpdateItemPosition();
-    } 
 
     public void OnPointerEnter(PointerEventData pointer){
         background.gameObject.SetActive(true);
@@ -112,12 +75,97 @@ public class ItemObj : MonoBehaviour,
     }
 
     public void SetIconUsable(Unit currentUnit, bool isCombat){
-        if (item.itemType.IsUsable(currentUnit, isCombat)){
+        if (item != null && item.IsUsable(currentUnit, isCombat)){
             icon.color = Color.white;
         } else {
             icon.color = new Color(1f,1f,1f, 0.5f);
         }
     }
 
+    public bool SameItem(ItemObj other){
+        if (other == null){
+            return false;
+        }
+        return item == other.item;
+    }
 
+    public int AddAmount(ItemObj other){
+        amount = amount + other.amount;
+        if (isLimited && amount > item.max_amount){
+            int remaining = amount - item.max_amount;
+            amount = item.max_amount;
+            count.text = amount.ToString();
+            return remaining;
+        }
+        count.text = amount.ToString();
+        return 0;
+    }
+
+    public virtual int AddAmount(int extra){
+        amount += extra;
+        if (isLimited && amount > item.max_amount){
+            int remaining = amount - item.max_amount;
+            amount = item.max_amount;
+            count.text = amount.ToString();
+            return remaining;
+        }
+        count.text = amount.ToString();
+        return 0;
+    }
+
+    public void SetAmount(int amt){
+        amount = amt;
+        count.text = amount.ToString();
+        if (isLimited && amount > item.max_amount){
+            Debug.Log("Warning: Item is over limit");
+        }
+    }
+
+    public int RemoveAmount(int extra){
+        amount -= extra;
+        if (extra <= 0){
+            parentSlot.SetItem(null);
+            Destroy(gameObject);
+            return Mathf.Abs(amount);
+        }
+        count.text = amount.ToString();
+        return 0;
+    }
+
+    public void SetSlot(ItemSlot slot){
+        parentSlot = slot;
+        transform.SetParent(slot.transform);
+        rt.anchoredPosition = Vector3.zero;
+        rt.localScale = Vector3.one;   
+    }
+
+    protected void RaycastCheck(PointerEventData p){
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(p, results);
+        foreach (RaycastResult r in results){
+            ItemSlot s = r.gameObject.GetComponent<ItemSlot>();
+            if (s != null && s != parentSlot && !s.temporary){
+                bool newItem = parentSlot.temporary;
+                int current = amount;
+                int remaining = s.SwapItems(parentSlot);
+                if (newItem){
+                    GameEvents.current.AddTrigger(new ItemAmount(item, current - remaining));
+                }
+                return;
+            }
+        }
+        parentSlot.UpdateItemPosition();
+    }
+}
+
+public class ItemCompare: Comparer<ItemObj>{
+    public override int Compare(ItemObj x, ItemObj y){
+        if (x.Slot.slotId < y.Slot.slotId){
+            return -1;
+        } else if (x.Slot.slotId > y.Slot.slotId){
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64d91897bc15af44b9d4c64b60caee6, type: 3}
+  m_Name: _Crossbow
+  m_EditorClassIdentifier: 
+  weaponName: Crossbow
+  weaponIcon: {fileID: 21300000, guid: 896a7a09cdce2fd45bf962821731e5e1, type: 3}
+  damage: {x: 1, y: 4}
+  weaponAbilities:
+  - {fileID: 11400000, guid: bcaa1f2605eba81429327a2f807d5672, type: 2}
+  - {fileID: 11400000, guid: af75692023d2e5f489661b35e6297f77, type: 2}
+  steelSpecial: {fileID: 0}
+  ironSpecial: {fileID: 0}
+  tinSpecial: {fileID: 11400000, guid: 37d52d85a7134f04abaced46b8c284da, type: 2}
+  petwerSpecial: {fileID: 0}
+  zincSpecial: {fileID: 0}
+  brassSpecial: {fileID: 11400000, guid: 3c3d1a4a68ba2954f9afd5ca70290754, type: 2}
+  description: Wields a crossbow. A powerful ranged weapon that can stop even the
+    strongest enemies in their tracks.

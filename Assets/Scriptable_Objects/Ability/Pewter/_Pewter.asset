@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c65f0b699a202840b81b78ea3e80012, type: 3}
+  m_Name: _Pewter
+  m_EditorClassIdentifier: 
+  className: Pewter
+  classIcon: {fileID: 21300000, guid: b2d460b2a3c12414eafefb1136871c4c, type: 3}
+  classAbilities:
+  - {fileID: 11400000, guid: 87754092f3b873d4dac299ba2fc11f0d, type: 2}
+  - {fileID: 11400000, guid: 02b4f1b619ec38640a4b3dbf0ceaa10b, type: 2}
+  - {fileID: 11400000, guid: 9c460942af40d8843bc6b96afbf5f7e9, type: 2}
+  - {fileID: 11400000, guid: b20ca3f40a9788f43aa11bb1130bc06b, type: 2}
+  description: Pewterarms are mistings with the ability to burn Pewter. They can enhance
+    their strength and stamina to endure more punishment than anyone else. A strong
+    fighter makes a valuable addition to any crew, and can make some difficult problems
+    quite simple.

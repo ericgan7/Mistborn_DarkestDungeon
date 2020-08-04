@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName="Alarm Buffs")]
+[CreateAssetMenu(menuName="Environment/Alarm Buffs")]
 public class AlarmBuffs : EnvironmentBuffs
 {
     
@@ -16,7 +16,7 @@ public class AlarmBuffs : EnvironmentBuffs
         return enemySpawn;
     }
 
-    public override string GetString(){
+    public override string ToString(){
         string result = "";
         if (allySupriseMod > 0){
             result += string.Format("Chance to Surpise Enemies: +{0}%\n", allySupriseMod);
@@ -25,7 +25,7 @@ public class AlarmBuffs : EnvironmentBuffs
             result += string.Format("Chance to be Suprised: +{0}%\n", enemySupriseMod);
         }
         result += string.Format("Loot Value: x{0}\n", lootMod);
-        result += base.GetString();
+        result += base.ToString();
         if (enemySpawn.Count > 0){
             result += "Spawn Enemy Patrol\n";
         }

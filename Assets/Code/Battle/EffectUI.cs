@@ -27,9 +27,9 @@ public class EffectUI : MonoBehaviour
             gameObject.SetActive(true);
         }
 
-        unitName.text = actor.stats.GetName();
+        unitName.text = target.stats.GetName();
         width = Mathf.Max(LayoutUtility.GetPreferredWidth(unitName.rectTransform), width);
-        Vector2Int hp = actor.stats.Health();
+        Vector2Int hp = target.stats.Health();
         health.text = string.Format("<color={2}><b>Health</b></color>: {0}/{1}", hp.x, hp.y, ColorPallete.GetHexColor("Green"));
         effects.text = "";
         if (actor == target){
@@ -42,8 +42,17 @@ public class EffectUI : MonoBehaviour
                 effects.text += e.ToString();
                 ++lines;
             }
-        }
-        else {
+            if (!ability.usable.self){
+                foreach(Effect e in ability.TargetBuffs) { 
+                    if (effects.text.Length == 0)
+                    {
+                        effects.text = "Effects: \n";
+                    }
+                    effects.text += e.ToString(target) + "\n";
+                    ++lines;
+                }
+            }
+        } else {
             if (ability.IsAttack){
                 Ability_Attack aa = (Ability_Attack) ability;
                 effects.text = string.Format("<color={1}><b>Accuracy</b></color>: {0}%\n", 
@@ -66,6 +75,7 @@ public class EffectUI : MonoBehaviour
                 ++lines;
             }
         }
+        
         width = Mathf.Max(LayoutUtility.GetPreferredWidth(effects.rectTransform), width);
         rt.sizeDelta = new Vector2(width, lines * unitName.fontSize);
         if (!on){

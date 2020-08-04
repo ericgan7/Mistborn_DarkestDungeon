@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Create Class")]
+[CreateAssetMenu(menuName = "Character/Create Class")]
 public class CharacterClass : ScriptableObject
 {
     public string className;
@@ -12,4 +12,6 @@ public class CharacterClass : ScriptableObject
     public List<TraitTarget> attackBonuses;
     //TODO: implement?
     public List<StatusEffect> traitEffects;
+
+    public string description;
 }

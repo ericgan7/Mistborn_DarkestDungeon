@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08198c06f6adc1b41a33a2565211fcfd, type: 3}
+  m_Name: Skull Cracker
+  m_EditorClassIdentifier: 
+  abilityName: Skull Cracker
+  usable: {fileID: 11400000, guid: 69e9e576ca3727647b505b57c65d8e2d, type: 2}
+  targetable: {fileID: 11400000, guid: 4d63d3e20506cfd48ba11bab6082d2ee, type: 2}
+  metalCost: 0
+  isAOE: 0
+  isSelf: 0
+  cancelDisplay: 0
+  isRanged: 0
+  usableOutOfComabat: 0
+  actorParticles: {fileID: 0}
+  selfEffects: []
+  targetEffects:
+  - Stress 3
+  - Bleed 2 3
+  spriteType: 1
+  targetPartcles: {fileID: 11400000, guid: fe294dc1196f7c74199282a0d6041175, type: 2}
+  ai: {fileID: 0}
+  accmod: 90
+  critmod: 5
+  dmgmod: 1
+  targetTraits:
+  - Mark 1

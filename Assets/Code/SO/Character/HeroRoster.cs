@@ -14,6 +14,16 @@ public class HeroRoster : ScriptableObject
 
     public List<Character> selectedCharacters;
 
+    public List<Character> GetRosterCharacters(){
+        List<Character> roster = new List<Character>();
+        foreach(Character c in currentRoster){
+            Character character = ScriptableObject.CreateInstance("Character") as Character;
+            character.Init(c);
+            roster.Add(character);
+        }
+        return roster;
+    }
+
     public List<Character> GetAllyCharacters()
     {
         //can either generate instance with create instance or use prefab;
@@ -22,7 +32,9 @@ public class HeroRoster : ScriptableObject
         {
             if (i < selectedCharacters.Count)
             {
-                allies.Add(new Character(selectedCharacters[i]));
+                Character character = ScriptableObject.CreateInstance("Character") as Character;
+                character.Init(selectedCharacters[i]);
+                allies.Add(character);
             }
             else
             {
@@ -39,7 +51,9 @@ public class HeroRoster : ScriptableObject
         List<Character> team = new List<Character>();
         foreach(Character c in enemyPrefabs[0].characters){
             if (c != null){
-                team.Add(new Character(c));
+                Character character = ScriptableObject.CreateInstance("Character") as Character;
+                character.Init(c);
+                team.Add(character);
             }
             else {
                 team.Add(null);

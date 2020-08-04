@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64d91897bc15af44b9d4c64b60caee6, type: 3}
+  m_Name: _Sling
+  m_EditorClassIdentifier: 
+  weaponName: Sling
+  weaponIcon: {fileID: 21300000, guid: 00b4a1abf0e6d1a4dba156ffe337cb45, type: 3}
+  damage: {x: 0, y: 2}
+  weaponAbilities:
+  - {fileID: 11400000, guid: 7883c78fa20ea254f833815be66b8870, type: 2}
+  - {fileID: 11400000, guid: e9343b276d582d44cacbcf546fa36be0, type: 2}
+  steelSpecial: {fileID: 0}
+  ironSpecial: {fileID: 11400000, guid: bd17c41a1e399134abd3a7703080a89d, type: 2}
+  tinSpecial: {fileID: 0}
+  petwerSpecial: {fileID: 0}
+  zincSpecial: {fileID: 11400000, guid: 02fdb5d94c70adc4fb6a273094d11714, type: 2}
+  brassSpecial: {fileID: 0}
+  description: Wields a sling. Cheap and easily concealed weapon that can throw projectiles
+    at stunning speeds that leaves enemies realing and dazed.

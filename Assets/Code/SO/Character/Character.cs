@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-[CreateAssetMenu(menuName = "Create Character")]
+[CreateAssetMenu(menuName = "Character/Create Character")]
 public class Character : ScriptableObject
 {
     // Character variables
     public string characterName;
-    public string className;
-    public Sprite portrait;
 
     public List<Ability> abilities;
     public Ability movement;
@@ -20,6 +18,7 @@ public class Character : ScriptableObject
 
     public CharacterClass characterClass;
     public Weapon currentWeapon;
+    public List<Weapon> weapons;
 
     public int health;
     public int defense;
@@ -37,12 +36,13 @@ public class Character : ScriptableObject
     public int debuffResist;
     public int stressResist;
 
+    public int virtue;
+
     public EnemyAI ai;
 
-    public Character(Character c)
+    public void Init(Character c)
     {
         characterName = c.characterName;
-        className = c.className;
         abilities = new List<Ability>(c.abilities);
         movement = c.movement;
         equippedItems = new List<EquipableItem>(c.equippedItems);
@@ -52,6 +52,7 @@ public class Character : ScriptableObject
         }
         characterClass = c.characterClass;
         currentWeapon = c.currentWeapon;
+        weapons = new List<Weapon>(c.weapons);
 
         health = c.health;
         defense = c.defense;
@@ -67,12 +68,17 @@ public class Character : ScriptableObject
         moveResist = c.moveResist;
         debuffResist = c.moveResist;
 
+        virtue = c.virtue;
+
         ai = c.ai;
     }
 
-    public string GetBasicSprite()
+    public string GetSpriteHeader()
     {
-        return string.Format("{0} {1}", characterClass.className, currentWeapon.weaponName); 
+        if (characterClass == null){    //if charaacterclass
+            return characterName;
+        }
+        return string.Format("{0}_{1}", characterClass.className, currentWeapon.weaponName); 
     }
 
     public string GetSpriteSkill(Ability a)

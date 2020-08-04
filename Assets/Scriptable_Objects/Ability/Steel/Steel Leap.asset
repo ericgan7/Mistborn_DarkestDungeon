@@ -15,14 +15,19 @@ MonoBehaviour:
   abilityName: Steel Leap
   usable: {fileID: 11400000, guid: f27261caf9ce0d149ad4b09b8f3fa748, type: 2}
   targetable: {fileID: 11400000, guid: 309bc66c252cd7b4986e9158d059e343, type: 2}
-  metalCost: 0
+  metalCost: 1
+  ammoCost: 0
   isAOE: 0
   isSelf: 1
   cancelDisplay: 0
   isRanged: 0
+  usableOutOfComabat: 0
+  actorParticles: {fileID: 11400000, guid: a28b4dd1d0edb834a86cd0fc4fd64f26, type: 2}
   selfEffects:
   - Push 2
   - Dodge 5 3
   - Damage 2 2
   targetEffects: []
+  spriteType: 0
+  targetPartcles: {fileID: 0}
   ai: {fileID: 0}

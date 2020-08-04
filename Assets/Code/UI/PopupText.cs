@@ -22,7 +22,7 @@ public class PopupText : MonoBehaviour
         rt.localPosition = rt.localPosition + offset;
         target = rt.localPosition + distance;
         rt.localPosition = Vector3.SmoothDamp(rt.localPosition, target, ref velocity, duration);
-        Destroy(gameObject, duration);
+        gameObject.SetActive(false);
     }
 
     private void Update()
@@ -42,5 +42,8 @@ public class PopupText : MonoBehaviour
 
     public void SetColor(Color messageColor) { text.faceColor = messageColor; }
 
-
+    public void ActivatePopUp(){
+        gameObject.SetActive(true);
+        Destroy(gameObject, duration);
+    }
 }

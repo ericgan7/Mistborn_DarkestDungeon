@@ -13,9 +13,9 @@ public class CharacterController : MonoBehaviour
         List<Character> characters = state.hr.currentRoster;
         foreach (Character c in characters){
             HeroRosterSlot hrs = Instantiate<HeroRosterSlot>(prefab, transform);
-            hrs.Init(c);
-            hrs.SetRaycaster(raycaster);
-            hrs.menu = characterMenu;
+            //hrs.Init(c);
+            //hrs.SetRaycaster(raycaster);
+            //hrs.menu = characterMenu;
         }
     }
 }

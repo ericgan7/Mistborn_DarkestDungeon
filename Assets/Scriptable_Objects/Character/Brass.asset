@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Brass
   className: Brass
-  portrait: {fileID: 21300000, guid: 15f792a8897aaa144ae4f8e8711daa73, type: 3}
   abilities:
   - {fileID: 11400000, guid: e64b46d6bc22fb043821d6be2740afa7, type: 2}
   - {fileID: 11400000, guid: 9a45fb4057d62d14cadaae2ccaf005be, type: 2}
@@ -28,6 +27,9 @@ MonoBehaviour:
   - Brass
   characterClass: {fileID: 11400000, guid: 3b040b2586e519d4b8896b10c1af7be8, type: 2}
   currentWeapon: {fileID: 11400000, guid: 078fa0c53f4058a49a386b774cefd63b, type: 2}
+  weapons:
+  - {fileID: 11400000, guid: 078fa0c53f4058a49a386b774cefd63b, type: 2}
+  - {fileID: 11400000, guid: 1d17522c5b4591647ad023abc9c7f96b, type: 2}
   health: 15
   defense: 10
   will: 10
@@ -41,4 +43,5 @@ MonoBehaviour:
   moveResist: 20
   debuffResist: 60
   stressResist: 0
+  virtue: 0
   ai: {fileID: 0}

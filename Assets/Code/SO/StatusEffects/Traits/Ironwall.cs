@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ironwall : Traits
 {
+    public override string traitName => "Ironwall";
     public Ironwall(){}
 
     public override void ModifyAttack(Ability_Attack a, Unit actor, Unit target, ref AbilityResultList results){

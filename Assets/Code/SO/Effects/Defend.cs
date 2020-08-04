@@ -5,10 +5,16 @@ using UnityEngine;
 
 public class Defend : Effect
 {
+    public override bool IsHeal => true;
     int amount;
     public Defend(int a)
     {
         amount = a;
+    }
+
+    //consider changing it to a range of amounts;
+    public override int GetAmount(){
+        return amount;
     }
 
     public override void ApplyEffect(Unit actor, Unit target, ref AbilityResultList results)
@@ -20,7 +26,7 @@ public class Defend : Effect
             actor = actor,
             target = target,
             amount = Mathf.Min(amount, def.y - def.x),
-            result = Result.def
+            result = Result.Def
         };
         results.targets.Add(r);
     }

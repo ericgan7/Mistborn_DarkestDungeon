@@ -22,6 +22,7 @@ public class MapUnit : MonoBehaviour
     int wayPos;
     int routePos;
     bool moving;
+    bool checkCombat;
     Behavior state;
 
     public int vision;
@@ -37,6 +38,7 @@ public class MapUnit : MonoBehaviour
         route = new List<Vector2Int>();
         map = FindObjectOfType<MapController>();
         moveIntent.gameObject.SetActive(false);
+        checkCombat = true;
     }
 
     public void SetPosition(Vector2 position){
@@ -53,6 +55,7 @@ public class MapUnit : MonoBehaviour
         location = adjacentRoom;
         velocity = Vector2.zero;
         moving = true;
+        checkCombat = false;
     }
 
     public void SetRoute(List<Vector2Int> newwaypoints){
@@ -109,10 +112,14 @@ public class MapUnit : MonoBehaviour
         if (moving && Vector2.Distance(rt.anchoredPosition, location.rt.anchoredPosition) > 0.1){
             rt.anchoredPosition = Vector2.SmoothDamp(rt.anchoredPosition, location.rt.anchoredPosition, ref velocity, moveTime);
         } else if (moving){
-            location.OnRoomEnter();
+            if (isPlayer){
+                location.OnRoomEnter();
+            }
             moving = false;
-            map.CheckForCombat(location, this);
             //DisplayIntent();
+        } else if (!checkCombat && map.CanMove){
+            map.CheckForCombat(location, this);
+            checkCombat = true;
         }
     }
 }

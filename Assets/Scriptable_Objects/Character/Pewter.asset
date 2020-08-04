@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa85cb59376a3ff4db9cfbdf6a61a3fc, type: 3}
+  m_Name: Pewter
+  m_EditorClassIdentifier: 
+  characterName: Pewter
+  className: Pewter
+  abilities:
+  - {fileID: 11400000, guid: 02b4f1b619ec38640a4b3dbf0ceaa10b, type: 2}
+  - {fileID: 11400000, guid: 412660d45c5a26f45a0123aa8d33fe7c, type: 2}
+  - {fileID: 11400000, guid: 9a45fb4057d62d14cadaae2ccaf005be, type: 2}
+  - {fileID: 11400000, guid: b20ca3f40a9788f43aa11bb1130bc06b, type: 2}
+  movement: {fileID: 11400000, guid: 97d69da85d3ce0245ac2842ba1f481f0, type: 2}
+  equippedItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  ctraits:
+  - Pewter
+  characterClass: {fileID: 11400000, guid: 1896d5b07ffc5df429c1417e5be56d13, type: 2}
+  currentWeapon: {fileID: 11400000, guid: 078fa0c53f4058a49a386b774cefd63b, type: 2}
+  weapons:
+  - {fileID: 11400000, guid: 078fa0c53f4058a49a386b774cefd63b, type: 2}
+  - {fileID: 11400000, guid: 4c5a64f82e6d53a4186f7fed50e4098a, type: 2}
+  health: 15
+  defense: 8
+  will: 10
+  crit: 10
+  acc: 0
+  dmg: 4
+  speed: 1
+  dodge: 10
+  bleedResist: 60
+  stunResist: 60
+  moveResist: 50
+  debuffResist: 30
+  stressResist: 0
+  virtue: 0
+  ai: {fileID: 0}

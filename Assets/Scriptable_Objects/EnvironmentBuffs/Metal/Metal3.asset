@@ -16,9 +16,7 @@ MonoBehaviour:
   allyEffects:
   - Acc 10 1
   - Crit 3 1
+  - StressResist 1 1
   enemyEffects: []
-  allySupriseMod: 0
-  enemySupriseMod: 0
-  lootMod: 0
   metalMod: 2
   level: 75

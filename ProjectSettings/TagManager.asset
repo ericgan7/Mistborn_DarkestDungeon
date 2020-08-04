@@ -14,7 +14,7 @@ TagManager:
   - 
   - 
   - Selected Unit
-  - 
+  - Items
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   m_SortingLayers:
   - name: Over
     uniqueID: 2704092517
+    locked: 0
+  - name: Items
+    uniqueID: 377404581
     locked: 0
   - name: Default
     uniqueID: 0

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1524d9c31b607804d97842b40613dceb, type: 3}
+  m_Name: Trap
+  m_EditorClassIdentifier: 
+  dialogueText:
+  - Trap!
+  - There's no telling what it will trigger.
+  - We'll need to deal with it.
+  choices:
+  - {fileID: 11400000, guid: 7397cd159bb6f9344bfd4c9436a7f075, type: 2}
+  - {fileID: 11400000, guid: 6323d7abed670494fb8059096ed3feea, type: 2}
+  eventImage: {fileID: 21300000, guid: 69944f0823f5db54a9ebc454f792db59, type: 3}
+  eventStats: {fileID: 11400000, guid: e92d3c6a212a8bc4e85d590258528de9, type: 2}

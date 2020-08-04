@@ -5,19 +5,20 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     // Variables
-    public GameState state;
-
     public List<Unit> turnorder;
     static CompareUnitSpeed compare = new CompareUnitSpeed();
     public Unit currentUnit;
     public GameMode mode;
+
+    [SerializeField] Unit_Event eventUnit;
+
+    bool playAffliction;
     //test
     public bool StartCombatImmediately;
 
     private void Awake()
     {
-        state = FindObjectOfType<GameState>();
-        state.gc = this;
+        GameState.Instance.gc = this;
         turnorder = new List<Unit>();
         mode = GameMode.exploration;
     }
@@ -28,10 +29,19 @@ public class GameController : MonoBehaviour
             StartCombat(null);
         }
         else {
-            state.ally.SetUnits(null);
-            currentUnit = state.ally.GetUnits()[0];
-            state.uic.SetCurrentUnit(currentUnit);
+            GameState.Instance.ally.SetUnits(null);
+            currentUnit = GameState.Instance.ally.GetUnits()[0];
+            GameState.Instance.uic.SetCurrentUnit(currentUnit);
         }
+    }
+
+    public void SetEventUnit(EventDialogue e){
+        if (e == null){
+            eventUnit.gameObject.SetActive(false);
+            return;
+        }
+        eventUnit.SetEvent(e);
+        eventUnit.gameObject.SetActive(true);
     }
 
     public void SetCurrentUnit(Unit current){
@@ -43,35 +53,42 @@ public class GameController : MonoBehaviour
 
     public void StartCombat(EnemyGroup enemy)
     {
-        Debug.Log("START COMBAT");
-        state.ic.StartCombat();
-        state.uic.ToggleMenu("Ability");
-        state.ally.SetUnits(null);
-        state.enemy.SetUnits(enemy);
+        mode = GameMode.combat;
+        GameState.Instance.ic.StartCombat();
+        GameState.Instance.uic.ToggleMenu("Combat");
+        GameState.Instance.ally.SetUnits(null);
+        GameState.Instance.ally.TurnLightingOn(true);
+        GameState.Instance.enemy.SetUnits(enemy);
+        GameState.Instance.enemy.TurnLightingOn(true);
         SetTurnOrder(true);
         currentUnit = turnorder[turnorder.Count - 1];
-        state.uic.SetCurrentUnit(currentUnit);
+        GameState.Instance.uic.SetCurrentUnit(currentUnit);
         currentUnit.SetActionPips(false);
     }
 
     public void SetTurnOrder(bool start = false) {
-        turnorder.AddRange(state.ally.GetUnits());
-        turnorder.AddRange(state.enemy.GetUnits());
+        turnorder.AddRange(GameState.Instance.ally.GetUnits());
+        turnorder.AddRange(GameState.Instance.enemy.GetUnits());
         if (start){
-            ApplySuprise();
+            //ApplySuprise();
         }
         turnorder.Sort(0, turnorder.Count, compare);
-        state.ally.SetActionPips();
-        state.enemy.SetActionPips();
+        GameState.Instance.ally.SetActionPips();
+        GameState.Instance.enemy.SetActionPips();
     }
 
     public void NextTurn()
     {
-        if (state.ally.GetUnits().Count == 0){
+        if ( mode == GameMode.exploration){ //end of curio event turn
+            eventUnit.gameObject.SetActive(false);
+            return;
+        }
+        if (GameState.Instance.ally.GetUnits().Count == 0){
             Debug.Log("FIGHT DEFEAT");
-        } else if (state.enemy.GetUnits().Count == 0){
-            state.ic.EndCombat();
+        } else if (GameState.Instance.enemy.GetUnits().Count == 0 || GameState.Instance.ally.GetUnits().Count == 0){
+            GameState.Instance.ic.EndCombat();
             //bring up game end screen
+            GameState.Instance.uic.OpenGameOverMenu();
         } else {
             NextCharacter();
         }
@@ -79,12 +96,12 @@ public class GameController : MonoBehaviour
 
     void NextCharacter()
     {
-        state.uic.ResetTargetState();
+        GameState.Instance.uic.ResetTargetState();
         turnorder.RemoveAt(turnorder.Count - 1);
         if (turnorder.Count == 0)
         {
             SetTurnOrder();
-            state.am.IncreaseAlarm();
+            GameState.Instance.am.IncreaseAlarm();
         }
         currentUnit = turnorder[turnorder.Count - 1];
         currentUnit.SetActionPips(false);
@@ -96,15 +113,15 @@ public class GameController : MonoBehaviour
             PlayEnemyTurn();
         }else
         {
-            state.uic.SetCurrentUnit(currentUnit);
-            StartCoroutine(ExecuteAfflictionTurn());
+            GameState.Instance.uic.SetCurrentUnit(currentUnit);
+            StartCoroutine(ExecuteUnitAfflictionTurn());
         }
     }
 
 
     public void PlayEnemyTurn()
     {
-        Decision d = currentUnit.ai.MakeDecision(currentUnit, state.ally, state.enemy, currentUnit.stats.GetAbilities());
+        Decision d = currentUnit.ai.MakeDecision(currentUnit, GameState.Instance.ally, GameState.Instance.enemy, currentUnit.stats.GetAbilities());
         StartCoroutine(PlayEnemySelection(d));
     }
 
@@ -116,83 +133,133 @@ public class GameController : MonoBehaviour
         PlayAction(decision.ability, decision.target);
     }
 
-
     public void PlayAction(Ability ability, Unit target)
     {
         AbilityResultList results = new AbilityResultList
         {
             actor = currentUnit,
             ability = ability,
-            display = true,
+            display = !ability.cancelDisplay,
         };
-        ability.ApplyAbility(ability.GetTargetTeam(currentUnit, state.ally, state.enemy),
-            currentUnit, target, ref results);
+        ability.ApplyAbility(currentUnit, target, ref results);
         if (ability.metalCost > 0){
-            state.am.UpdateMetal(-ability.metalCost);
+            GameState.Instance.metal.UpdateMetal(-ability.metalCost);
         }
-        Debug.Log("Executing ability");
+        StartCoroutine(ExecuteAbilityTurn(results));
+    }
+
+    public void PlayEvent(Ability_Event ability, Unit trap){
+        AbilityResultList results = new AbilityResultList
+        {
+            actor = trap,
+            ability = ability,
+            display = !ability.cancelDisplay,
+        };
+        ability.ApplyAbility(trap, currentUnit, ref results);
         StartCoroutine(ExecuteAbilityTurn(results));
     }
 
     public IEnumerator ExecuteAbilityTurn(AbilityResultList results)
     {
         //lock player input
-        state.ic.SetBlock(true);
+        GameState.Instance.ic.SetBlock(true);
+        //turn lighting teams off
+        GameState.Instance.ally.TurnLightingOn(false);
+        GameState.Instance.enemy.TurnLightingOn(false);
+        //turn off alarm visibilty;
+        GameState.Instance.am.SetAlarmVisible(false);
         //play animation
-        if (!results.ability.cancelDisplay){
+        if (results.display){
             if (!results.actor.UnitTeam.isAlly){
-                state.uic.action.DisplayAbilityName(results);
-                state.uic.action.ShowAbilityTargets(results);
+                GameState.Instance.uic.action.DisplayAbilityName(results);
+                GameState.Instance.uic.action.ShowAbilityTargets(results);
                 yield return new WaitForSeconds(0.75f);
-                state.uic.action.HideAbilityName();
+                GameState.Instance.uic.action.HideAbilityName();
             }
 
-            state.uic.action.DisplayActor(results, 0.2f);
-            state.uic.ScaleBackground(1.5f, 0.5f);
+            GameState.Instance.uic.action.DisplayActor(results, 0.1f);
+            GameState.Instance.uic.ScaleBackground(1.5f, 0.5f);
             yield return new WaitForSeconds(0.1f);
-            state.uic.action.DisplayTargets(results);
+            GameState.Instance.uic.action.DisplayTargets(results, 1.0f);
             yield return new WaitForSeconds(0.5f);
-            state.uic.action.DisplayCounter(results);
+            GameState.Instance.uic.action.DisplayCounter(results);
             yield return new WaitForSeconds(1.0f);
             //update unit uis
-            state.uic.action.HideAciton();
-            state.uic.ScaleBackground(1.0f, 0.5f);
+            GameState.Instance.uic.action.HideAciton();
+            GameState.Instance.uic.ScaleBackground(1.0f, 0.5f);
         }
-        for (int i = 0; i < results.delayedEffects.Count; ++i)
+        //turn lighting back on
+        GameState.Instance.ally.TurnLightingOn(true);
+        GameState.Instance.enemy.TurnLightingOn(true);
+        GameState.Instance.am.SetAlarmVisible(true);
+        //applies delayed effects like bleed or buffs
+        List<Unit> targets = new List<Unit>();
+        foreach (DelayedAbilityResult d in results.delayedEffects)
         {
-            results.delayedEffects[i].Apply(results.actor);
-            results.delayedEffects[i].Display(0.5f * i);
+            d.ApplyEffect(results.actor);
+            d.Display();
+            if (!targets.Contains(d.target)){
+                targets.Add(d.target);
+            }
         }
-        yield return new WaitForSeconds(0.5f); // play out all delayed effect displays
+        //waits for all effects to be played out
+        bool doneDisplay = false;
+        while(!doneDisplay){
+            doneDisplay = true;
+            foreach(Unit u in targets){
+                if (!u.IsFinishedPopupText()){
+                    doneDisplay = false;
+                }
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        //applies stress
+        foreach (DelayedAbilityResult d in results.stress){
+            d.ApplyEffect(results.actor);
+            d.Display();
+            while (playAffliction){
+                yield return new WaitForSeconds(GameState.Instance.uic.affliction.GetDuration());
+            }
+            yield return new WaitForSeconds(0.75f);
+        }
         //unlock player input
-        state.ic.SetBlock(false);
+        GameState.Instance.ic.SetBlock(false);
         NextTurn(); //after finished
         yield return null;
     }
 
+    public IEnumerator ExecuteInitialAfflictionTurn(Unit afflicted){
+        playAffliction = true;
+        GameState.Instance.uic.affliction.ShowResolve(afflicted);
+        yield return new WaitForSeconds(1.5f);
+        GameState.Instance.uic.affliction.DisplayAffliction(afflicted);
+        yield return new WaitForSeconds(GameState.Instance.uic.affliction.GetDuration());
+        playAffliction = false;
+    }
+
     public void ApplySuprise(){
-        int allySuprise = Random.Range(0, state.ally.supriseChance);
-        int enemySuprise = Random.Range(0, state.enemy.supriseChance);
+        int allySuprise = Random.Range(0, GameState.Instance.ally.supriseChance);
+        int enemySuprise = Random.Range(0, GameState.Instance.enemy.supriseChance);
         const int supriseThreshold = 50;
         if (allySuprise >= enemySuprise && allySuprise > supriseThreshold){
-            foreach (Unit u in state.enemy.GetUnits()){
+            foreach (Unit u in GameState.Instance.enemy.GetUnits()){
                 u.stats.ApplyDelayedEffect(EffectLibrary.GetEffect("Suprise") as StatusEffect);
             }
         } else if (enemySuprise > supriseThreshold) {
-            foreach (Unit u in state.ally.GetUnits()){
+            foreach (Unit u in GameState.Instance.ally.GetUnits()){
                 u.stats.ApplyDelayedEffect(EffectLibrary.GetEffect("Suprise") as StatusEffect);
             }
         }
     }
 
-    IEnumerator ExecuteAfflictionTurn(){
+    IEnumerator ExecuteUnitAfflictionTurn(){
         if (currentUnit.stats.modifiers.Affliction != null){
             if (currentUnit.stats.modifiers.Affliction.AfflictionTurnChance()){
-                state.ic.SetBlock(true);
+                GameState.Instance.ic.SetBlock(true);
                 yield return StartCoroutine(currentUnit.stats.modifiers.Affliction.StressTeam(currentUnit));
             }
         }
-        state.ic.SetBlock(false);
+        GameState.Instance.ic.SetBlock(false);
     }
     
 }

@@ -13,13 +13,11 @@ MonoBehaviour:
   m_Name: Steel
   m_EditorClassIdentifier: 
   characterName: steel
-  className: Steel
-  portrait: {fileID: 21300000, guid: 15f792a8897aaa144ae4f8e8711daa73, type: 3}
   abilities:
-  - {fileID: 11400000, guid: 6cf3f0733cbe95c478c2021895eb21e1, type: 2}
   - {fileID: 11400000, guid: 356bb1d8db4a36c488e685e35bc3b27a, type: 2}
   - {fileID: 11400000, guid: f94e8293aa6dea043a1282348bd1d042, type: 2}
-  - {fileID: 11400000, guid: 8ad5309b634fffa4583839b221ff59d9, type: 2}
+  - {fileID: 11400000, guid: d37b37abbc6dc234d929ec295d599fe2, type: 2}
+  - {fileID: 11400000, guid: 6cb3b902d50c6124aa2aec5363ea4129, type: 2}
   movement: {fileID: 11400000, guid: 97d69da85d3ce0245ac2842ba1f481f0, type: 2}
   equippedItems:
   - {fileID: 11400000, guid: 52fd9e9b0cb99054f9046baf8ff0b183, type: 2}
@@ -27,7 +25,10 @@ MonoBehaviour:
   ctraits:
   - Steel
   characterClass: {fileID: 11400000, guid: f23ba271fbdaad046b9581c0ece92d28, type: 2}
-  currentWeapon: {fileID: 11400000, guid: bef46a296a57e0b4b992217bb22e1ed0, type: 2}
+  currentWeapon: {fileID: 11400000, guid: aa1a864b6523d954e8c3504697faa86d, type: 2}
+  weapons:
+  - {fileID: 11400000, guid: bef46a296a57e0b4b992217bb22e1ed0, type: 2}
+  - {fileID: 11400000, guid: aa1a864b6523d954e8c3504697faa86d, type: 2}
   health: 10
   defense: 5
   will: 10
@@ -41,4 +42,5 @@ MonoBehaviour:
   moveResist: 20
   debuffResist: 40
   stressResist: 0
+  virtue: 0
   ai: {fileID: 0}

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa59414326c3a0a4f838ff8c546c4cc1, type: 3}
+  m_Name: Whetstone
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 3459adc7a75654a44a5b2dfb12ebf695, type: 2}
+  amount: 8

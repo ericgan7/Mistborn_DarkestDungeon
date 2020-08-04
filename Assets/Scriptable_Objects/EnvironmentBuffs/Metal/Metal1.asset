@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: Metal1
   m_EditorClassIdentifier: 
   stress: 0
-  allyEffects: []
+  allyEffects:
+  - Acc -5 1
+  - Crit -5 1
   enemyEffects: []
-  allySupriseMod: 0
-  enemySupriseMod: 0
-  lootMod: 0
   metalMod: 0
   level: 25

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3223050199352231337}
   - component: {fileID: 7411586444670073146}
   - component: {fileID: 36106728884385854}
-  - component: {fileID: 20414804457944127}
+  - component: {fileID: 5701614850915477976}
   m_Layer: 5
   m_Name: AbilityToolTip
   m_TagString: Untagged
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!114 &20414804457944127
+--- !u!114 &5701614850915477976
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,8 +158,8 @@ MonoBehaviour:
   usable: {fileID: 8345193307035573263}
   targets: {fileID: 8345193307040130684}
   abilityStats: {fileID: 8345193307261794852}
-  selfEffects: {fileID: 1482817319708747462}
-  targetEffects: {fileID: 2577890469268145544}
+  selfEffects: {fileID: 2577890469268145544}
+  targetEffects: {fileID: 1482817319708747462}
 --- !u!1 &1303955661247747475
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,6 +26,6 @@ public class Guard : StatusEffect
 
     public override string ToString(){
         return string.Format("<color={2}><b>Guarded</b></color> by {0} for {1} turns", 
-            defender.stats.GetName(), duration, ColorPallete.GetHexColor("Blue"));
+            defender != null ? defender.stats.GetName() : "unit", duration, ColorPallete.GetHexColor("Blue"));
     }
 }

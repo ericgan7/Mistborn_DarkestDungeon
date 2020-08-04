@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: _Iron
   m_EditorClassIdentifier: 
   className: Iron
-  classIcon: {fileID: 21300000, guid: 6235c7bec83c9e946a477aa505b4e345, type: 3}
+  classIcon: {fileID: 21300000, guid: 60f2a681e62074d45a3f0ba2cdaaf236, type: 3}
   classAbilities:
   - {fileID: 11400000, guid: 80026dfc7fe4c694d9688793b26aa1d2, type: 2}
   - {fileID: 11400000, guid: 5fe59ef516f0a564ba754c0162dde22c, type: 2}
   - {fileID: 11400000, guid: 306399346b48483439329caca8375d86, type: 2}
-  - {fileID: 11400000, guid: 72124fe145cee704e8734653cc0dd3c0, type: 2}
+  - {fileID: 11400000, guid: 16e7be191edf5d2468e2892dd3691c2f, type: 2}
+  description: Lurchers are mistings with the ability to burn iron. They can pull
+    metal towards them, protecting their allies and disrupting enemy attacks. They
+    can also pull themselves towards metal anchors to close the gap.

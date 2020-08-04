@@ -32,18 +32,18 @@ public enum TargetedState
 
 public enum Result
 {
-    hit,
-    miss,
-    graze,
-    dodge,
-    block,
-    heal,
-    def,
-    buff,
-    crit,
-    defcrit,
-    stress,
-    stressheal,
+    Hit,
+    Miss,
+    Graze,
+    Dodge,
+    Block,
+    Heal,
+    Def,
+    Buff,
+    Crit,
+    DefCrit,
+    Stress,
+    StressHeal,
     none,
 }
 
@@ -135,6 +135,8 @@ public static class StatName
                 return "Speed";
             case StatType.dodge:
                 return "Dodge";
+            case StatType.stressResist:
+                return "Stress Resist";
         }
         return "";
     }
@@ -158,9 +160,11 @@ public static class StatName
             case "Speed":
                 return StatType.speed;
             case "Dodge":
-            default:
                 return StatType.dodge;
+            case "StressResist":
+                return StatType.stressResist;
         }
+        return StatType.none;
     }
 }
 

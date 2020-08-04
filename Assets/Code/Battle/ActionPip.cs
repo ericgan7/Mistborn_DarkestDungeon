@@ -9,7 +9,6 @@ public class ActionPip : MonoBehaviour
     Coroutine currentAnim;
     [SerializeField] float animTime;
     float velocity;
-    float elapsed;
     float target;
 
     public void Awake(){
@@ -19,12 +18,13 @@ public class ActionPip : MonoBehaviour
 
     public void SetState(bool isOn){
         velocity = 0f;
-        elapsed = 0f;
         target = isOn ? 1f : 0f;
         if (currentAnim != null){
             StopCoroutine(currentAnim);
         }
-        currentAnim = StartCoroutine(SetAmount());
+        if (gameObject.activeInHierarchy){
+            currentAnim = StartCoroutine(SetAmount());
+        }
     }
 
     IEnumerator SetAmount(){

@@ -4,66 +4,68 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CharacterObj : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class CharacterObj : MonoBehaviour
 {
-    public Image icon;
-    public GraphicRaycaster raycaster;
-    public RectTransform rt;
+    [SerializeField] Image icon;
+    GraphicRaycaster raycaster;
+    [SerializeField] RectTransform rt;
     bool isDragging;
-    public HeroRosterSlot slot;
-
-    public HeroRosterSlot original;
-    public Character character;
+    HeroRosterSlot original;
+    public TeamRosterSlot slot;
+    Character currentCharacter;
 
     void Update(){
         if (isDragging){
             rt.position = Input.mousePosition;
         }
     }
-    public void SetDragging(bool drag){
-        isDragging = drag;
-    }
-    public void OnPointerDown(PointerEventData p){
-        isDragging = true;
+
+    public void Init(Character character, GraphicRaycaster raycast, HeroRosterSlot origin){
+        currentCharacter = character;
+        raycaster = raycast;
+        original = origin;
+        icon.sprite = SpriteLibrary.GetPortrait(character.characterClass.className);
     }
 
-    public void OnPointerUp(PointerEventData p){
-        isDragging = false;
-        CheckForSlot(p);
+    public Character GetCharacter(){
+        return currentCharacter;
+    }
+
+    public void SetDragging(bool drag){
+        isDragging = drag;
+        gameObject.SetActive(true);
     }
 
     public void CheckForSlot(PointerEventData p){
         List<RaycastResult> results = new List<RaycastResult>();
         raycaster.Raycast(p, results);
+        bool assignment = false;
         foreach (RaycastResult r in results){
-            HeroRosterSlot newSlot = r.gameObject.GetComponent<HeroRosterSlot>();
-            if (newSlot != null && newSlot != slot){
-                if (newSlot.AssignCharacter(this)){
-                    slot.AssignCharacter(newSlot.draggable);
-                    slot = newSlot;
-                    icon.raycastTarget = true;
-                    return;
+            TeamRosterSlot newSlot = r.gameObject.GetComponent<TeamRosterSlot>();
+            if (newSlot != null){
+                if (slot != null){
+                    slot.AssignCharacter(null);
                 }
+                slot = newSlot;
+                newSlot.AssignCharacter(this);
+                transform.SetParent(newSlot.transform);
+                assignment = true;
+                original.Assign(true);
             }
         }
-        rt.transform.parent = original.transform;
+        if (!assignment){
+            if (slot != null){
+                slot.AssignCharacter(null);
+            }
+        }
         rt.anchoredPosition = Vector3.zero;
-    }
-
-    public Character GetCharacter(){
-        return character;
-    }
-
-    public void SetCharacter(Character c){
-        character = c;
-        icon.sprite = c.portrait;
     }
 
     public void Reset(){
-        if (slot == null){
-            Debug.Log("ERROR SLOT IS NULL");
-        }
-        rt.anchoredPosition = Vector3.zero;
+        original.Assign(false);
+        rt.SetParent(original.transform);
+        rt.anchoredPosition = Vector2.zero;
+        slot = null;
     }
     
 }

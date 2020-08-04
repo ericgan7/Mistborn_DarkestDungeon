@@ -79,27 +79,27 @@ public static class ColorPallete
 
     public static Color GetResultColor(Result results){
         switch (results){
-            case Result.hit:
+            case Result.Hit:
                 return GetColor("Red");
-            case Result.miss:
+            case Result.Miss:
                 return GetColor("Grey");
-            case Result.dodge:
+            case Result.Dodge:
                 return GetColor("Grey");
-            case Result.graze:
+            case Result.Graze:
                 return GetColor("Orange");
-            case Result.heal:
+            case Result.Heal:
                 return GetColor("Green");
-            case Result.block:
+            case Result.Block:
                 return GetColor("Blue");
-            case Result.buff:
+            case Result.Buff:
                 return GetColor("Teal");
-            case Result.crit:
+            case Result.Crit:
                 return GetColor("Yellow");
-            case Result.defcrit:
+            case Result.DefCrit:
                 return GetColor("Highlight Blue");
-            case Result.stress:
+            case Result.Stress:
                 return GetColor("Purple");
-            case Result.stressheal:
+            case Result.StressHeal:
                 return GetColor("White");
             default:
                 return GetColor("Black");

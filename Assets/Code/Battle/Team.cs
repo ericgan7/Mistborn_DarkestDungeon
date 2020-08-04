@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Experimental.Rendering.LWRP;
 
 public class Team : MonoBehaviour
 {
     [SerializeField] List<Unit> units;
+    [SerializeField] Light2D teamLight;
     public bool isAlly;
     public List<Vector3> positions;
     public int supriseChance;
@@ -31,6 +32,12 @@ public class Team : MonoBehaviour
         {
             state.enemy = this;
         }
+        if (GetUnits().Count > 0){
+            teamLight.enabled = true;
+        }
+        else {
+            teamLight.enabled = false;
+        }
     }
 
     public void SetUnits(EnemyGroup enemyUnits)
@@ -42,7 +49,9 @@ public class Team : MonoBehaviour
             characters = new List<Character>();
             foreach(Character c in enemyUnits.characters){
                 if (c != null){
-                    characters.Add(new Character(c));
+                    Character character = ScriptableObject.CreateInstance("Character") as Character;
+                    character.Init(c);
+                    characters.Add(character);
                 }
                 else {
                     characters.Add(null);
@@ -95,6 +104,10 @@ public class Team : MonoBehaviour
             units[i].Location = i;
             units[i].MoveUnit(positions[i], Vector3.one);
         }
+    }
+
+    public void TurnLightingOn(bool isOn){
+        teamLight.enabled = isOn;
     }
 
 }

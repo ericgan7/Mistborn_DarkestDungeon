@@ -6,6 +6,7 @@ using UnityEngine;
 public class Ska : Traits
 {
     public override EffectType Type => EffectType.ska;
+    public override string traitName => "Ska";
 
     public override string ToString() {
         return "Unit is a Ska";

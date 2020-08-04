@@ -19,6 +19,12 @@ MonoBehaviour:
   currentRoster:
   - {fileID: 11400000, guid: 89da5758233bfc645a848f46c96758bc, type: 2}
   - {fileID: 11400000, guid: 4718667c7a675f646872b8274804df5f, type: 2}
+  - {fileID: 11400000, guid: 0042e04acd0ef074ca2f40b43ae932bd, type: 2}
+  - {fileID: 11400000, guid: 83c7cafb176b32d4a886e55ace94d7aa, type: 2}
+  - {fileID: 11400000, guid: 587b319d162fde44dbc0e7ee9a60303b, type: 2}
+  - {fileID: 11400000, guid: a137e2be37f183b4d9a1324240fc4716, type: 2}
   selectedCharacters:
-  - {fileID: 11400000, guid: 89da5758233bfc645a848f46c96758bc, type: 2}
   - {fileID: 11400000, guid: 4718667c7a675f646872b8274804df5f, type: 2}
+  - {fileID: 11400000, guid: 89da5758233bfc645a848f46c96758bc, type: 2}
+  - {fileID: 11400000, guid: 0042e04acd0ef074ca2f40b43ae932bd, type: 2}
+  - {fileID: 11400000, guid: 83c7cafb176b32d4a886e55ace94d7aa, type: 2}

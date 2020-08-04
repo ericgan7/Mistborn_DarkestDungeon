@@ -35,14 +35,17 @@ public class Stats
     }
 
     public string GetName() { return character.characterName; }
-    public string GetClassName(){ return character.className; }
+    public string GetClassName(){ return character.characterClass ? character.characterClass.className : character.characterName; }
+    public string GetWeaponName() {return character.currentWeapon.weaponName; }
+    public string GetSpriteHeader() {return character.GetSpriteHeader(); }
     public Vector2Int Health() { return health; }
     public Vector2Int Defense() { return defense; }
     public Vector2Int Will() { return will; }
     public Vector2Int Damage() { 
         Vector2Int d = damage;
-        d.x += (int) modifiers.GetStatModifier(StatType.damage);
-        d.y += (int) modifiers.GetStatModifier(StatType.damage);
+        int modifier = (int) modifiers.GetStatModifier(StatType.damage);
+        d.x += modifier;
+        d.y += modifier;
         return damage; 
     }
     public Weapon GetWeapon() { return character.currentWeapon; }
@@ -142,8 +145,12 @@ public class Stats
     public void StressDamage(int amount){
         will.x = Mathf.Clamp(will.x + amount, 0, will.y);
         if (will.x == will.y){
-            Debug.Log("Panic");
-            unit.Die();
+            if (unit.UnitTeam.isAlly && modifiers.Affliction == null){
+                will.x = 0;
+                SetAffliction();
+            } else {
+                unit.Die();
+            }
         }
     }
 
@@ -157,7 +164,6 @@ public class Stats
         if (health.x <= 0){
             return false;
         }
-        int delay = 0;
         bool startTurn = true;
         if (modifiers.IsStunned){
             startTurn = false;
@@ -169,14 +175,13 @@ public class Stats
         }
         if (damage > 0){
             unit.CreatePopUpText(damage.ToString(), ColorPallete.GetColor("Red"));
-            ++delay;
         }
         int stress = 0;
         foreach (StatusEffect e in modifiers.Terror){
             stress += e.ApplyOverTime(unit);
         }
         if (stress > 0){
-            unit.CreatePopUpText(stress.ToString(), ColorPallete.GetColor("Purple"), delay * 0.5f);
+            unit.CreatePopUpText(stress.ToString(), ColorPallete.GetColor("Purple"));
         }
         modifiers.OnTurnBegin();
         if (health.x <= 0){
@@ -186,7 +191,6 @@ public class Stats
     }
 
     public List<Traits> GetTraits(){
-        Debug.Log(character.traits.Count);
         List<Traits> traits = new List<Traits>(character.traits);
         return traits;
     }
@@ -196,11 +200,11 @@ public class Stats
         return traits;
     }
 
-    public void SetAffliction(Affliction affliction){
-        //roll for affliction
+    public void SetAffliction(){
+        //may need to add modifiers to virtue, or make it a stat from will/stress resist;
+        Affliction affliction = EffectLibrary.GenerateAffliction(character.virtue);
         modifiers.Affliction = affliction;
-        will.x = 0;
-        modifiers.Affliction.OnAffliction(unit);
+        unit.Panic();
     }
 
 }

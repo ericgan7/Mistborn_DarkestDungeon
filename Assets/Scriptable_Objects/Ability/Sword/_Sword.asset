@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: _Sword
   m_EditorClassIdentifier: 
   weaponName: Sword
-  weaponIcon: {fileID: 21300000, guid: a2a9055464fa5d640a4d9993d087007b, type: 3}
+  weaponIcon: {fileID: 21300000, guid: c310107177729694ebebc7c51ae8633b, type: 3}
   damage: {x: 1, y: 3}
   weaponAbilities:
   - {fileID: 11400000, guid: 4ed12a47736ea73458fb327978a5b8e6, type: 2}
   - {fileID: 11400000, guid: 9a45fb4057d62d14cadaae2ccaf005be, type: 2}
-  - {fileID: 11400000, guid: d07b80f9df54bdb4da356acb2e99f759, type: 2}
   steelSpecial: {fileID: 0}
   ironSpecial: {fileID: 0}
   tinSpecial: {fileID: 0}
-  petwerSpecial: {fileID: 0}
+  petwerSpecial: {fileID: 11400000, guid: 412660d45c5a26f45a0123aa8d33fe7c, type: 2}
   zincSpecial: {fileID: 0}
   brassSpecial: {fileID: 11400000, guid: d07b80f9df54bdb4da356acb2e99f759, type: 2}
+  description: Wields a sword. A versitile weapon that can be used to defend and attack
+    against multiple opponents.

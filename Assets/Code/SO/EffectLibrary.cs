@@ -48,6 +48,7 @@ public static class EffectLibrary
             case "Crit":
             case "Acc":
             case "Speed":
+            case "StressResist":
                 effects[param] = new StatBuff(p[0], float.Parse(p[1]), int.Parse(p[2]));
                 break;
             case "Block":
@@ -65,6 +66,13 @@ public static class EffectLibrary
                 break;
             case "Cleanse":
                 effects[param] = new Cleanse();
+                break;
+            case "Guard":
+                return new Guard(int.Parse(p[1]));
+            case "Metal":
+                return new Metal(int.Parse(p[1]));
+            default:
+                Debug.Log(param);
                 break;
         }
         return effects[param];
@@ -118,6 +126,43 @@ public static class EffectLibrary
             default:
                 Debug.Log("Missing Trait: " + param);
                 return null;
+        }
+    }
+
+    static int afflictions = 4;
+    public static Affliction GenerateAffliction(int virtue){
+        int roll = Random.Range(0, virtue);
+        bool positive = false;
+        if (roll < virtue){ //if we roll virtue, we get positive traits, else negative
+            positive = true;
+        }
+        roll = Random.Range(0, afflictions);
+        if (positive){
+            switch (roll){
+                case 0:
+                    return new Affliction_Paranoid();
+                case 1:
+                    return new Affliction_Fearful();
+                case 2:
+                    return new Affliction_Abusive();
+                case 3:
+                    return new Affliction_Machoistic();
+                default:
+                    return new Affliction_Paranoid();
+            }
+        } else {
+            switch(roll){
+                case 0:
+                    return new Affliction_Resolute();
+                case 1:
+                    return new Affliction_Righteous();
+                case 2:
+                    return new Affliction_Vengeful();
+                case 3:
+                    return new Affliction_Protective();
+                default:
+                    return new Affliction_Resolute();
+            }
         }
     }
 }

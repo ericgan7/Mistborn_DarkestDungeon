@@ -20,9 +20,8 @@ public class Alarm : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     float velocity;
     public int currentRadial;
 
-    public GameObject prefab;
-    GameObject tooltip;
-    GameState state;
+    [SerializeField] BasicTooltip tooltip;
+    RectTransform tooltipRt;
 
     public void Awake()
     {
@@ -31,7 +30,7 @@ public class Alarm : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         number.text = alarmLevel.ToString();
         cycleAnim = GetComponent<Animator>();
         cycleAnim.enabled = true;
-        state = FindObjectOfType<GameState>();
+        tooltipRt = tooltip.gameObject.GetComponent<RectTransform>();
     }
 
     public void SetAlarmLevel(int change)
@@ -46,7 +45,6 @@ public class Alarm : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         while (change > 0)
         {
             ++currentRadial;
-            Debug.Log(radial);
             --change;
             if (currentRadial == fillLevels.Count)
             {
@@ -92,13 +90,13 @@ public class Alarm : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
     public void OnPointerEnter(PointerEventData pointer){
-        tooltip = Instantiate<GameObject> (prefab, transform);
-        TextMeshProUGUI text = tooltip.GetComponentInChildren<TextMeshProUGUI>();
         EnvironmentBuffs buffs = manager.GetAlarmEffects();
-        text.text = buffs.GetString();
+        tooltip.SetDescription(buffs.ToString());
+        tooltip.gameObject.SetActive(true);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(tooltipRt);
     }
 
     public void OnPointerExit(PointerEventData pointer){
-        Destroy(tooltip);
+        tooltip.gameObject.SetActive(false);
     }
 }

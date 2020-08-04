@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Constitution : Traits
 {
+    public override string traitName => "Constitution";
     int bonusHealth;
     int regen;
 

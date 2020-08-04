@@ -18,12 +18,12 @@ public class Heal : Effect {
             actor = actor,
             target = target,
             amount = amount,
-            result = Result.heal
+            result = Result.Heal
         };
         results.targets.Add(r);
     }
 
-    public override string ToString(Unit target)
+    public override string ToString()
     {
         return string.Format("<color={1}><b>Heal</b></color> {0} health\n", amount, ColorPallete.GetHexColor("Green"));
     }

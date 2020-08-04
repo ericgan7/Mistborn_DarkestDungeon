@@ -7,7 +7,7 @@ using UnityEngine;
 public class MapLayout : ScriptableObject
 {
     public List<Vector2Int> rooms;
-    //available traps/curio rooms and types
+    public List<EventDialogue> events;
 
     public List<Vector2Int> patrolPoints;
 

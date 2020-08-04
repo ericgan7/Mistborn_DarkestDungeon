@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Experimental.Rendering.LWRP;
 
 public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    GameState gs;
-    [SerializeField] GameObject popupText;
+    protected GameState gs;
+    [SerializeField] SpawnText popups;
     [SerializeField] Character character;
     [SerializeField] Image sprite;
+    [SerializeField] Image effectSprite;
+    [SerializeField] Image deathblowSprite;
+    [SerializeField] Image backSprite;
     [SerializeField] SelectionIcon selectionIcon;
     [SerializeField] StatusEffectManager statusEffects;
     [SerializeField] EffectUI tooltip;
     [SerializeField] HealthManager health;
+    [SerializeField] Light2D hurtLight;
+    [SerializeField] Light2D attackLight;
+    [SerializeField] ParticleSystem particleEffects;
 
-    RectTransform rt;
+    protected RectTransform rt;
     public Team UnitTeam { get; set; }
     public bool Active { get { return gameObject.activeSelf; } }
     public TargetedState targetedState;
@@ -27,11 +34,11 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     public bool Moving { get; set; }
     bool fade;
     float fadevelocity;
-    Vector3 velocity = Vector3.zero;
-    Vector3 scalev = Vector3.zero;
-    float elapsed = 0f;
+    protected Vector3 velocity = Vector3.zero;
+    protected Vector3 scalev = Vector3.zero;
+    protected float elapsed = 0f;
     public float moveTime;
-    float _time;
+    protected float _time;
 
     public Stats stats;
     public EnemyAI ai;
@@ -63,12 +70,23 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         if (character == null){
             return;
         }
-        health.ExecuteUpdate();
+        if (health != null){
+            health.ExecuteUpdate();
+        }
         tooltip.SetAbility(this, null, null);
     }
 
-    public void SetUIChange(Vector2Int damageRange){
-        health.SetDamageIndicators(damageRange);
+    public void SetHealthChange(Vector2Int range){
+        if (range.y > 0){
+            health.SetHealIndicators(range);
+        }
+        else{
+            health.SetDamageIndicators(range);
+        }
+    }
+
+    public void SetStressChange(int range){
+        health.SetStressIndicators(range);
     }
 
 
@@ -91,11 +109,15 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     }
 
     public void UpdateUnitPosition(Vector3 destination, float time = 1.0f){
-        TargetPosition += destination;
+        velocity = Vector3.zero;
+        scalev = Vector3.zero;
+        Moving = true;
+        elapsed = 0f;
         _time = time;
+        TargetPosition += destination;
     }
 
-    public void ResetPosition(){
+    public virtual void ResetPosition(){
         //position
         velocity = Vector3.zero;
         TargetPosition = UnitTeam.positions[Location];
@@ -106,12 +128,17 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         Moving = true;
         elapsed = 0f;
         _time = moveTime;
+        //set action lights to disabled
+        attackLight.gameObject.SetActive(false);
+        hurtLight.gameObject.SetActive(false);
     }
 
     public void SetPosScale(Vector3 pos, Vector3 scale)
     {
         rt.localPosition = pos;
         rt.localScale = scale;
+        targetScale = scale;
+        TargetPosition = pos;
         velocity = Vector3.zero;
         scalev = Vector3.zero;
         elapsed = 0f;
@@ -124,7 +151,7 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         statusEffects.SetCharacter(c);
         stats.Init();
         ai = c.ai;
-        SetSprite(c.className + "_Default");
+        SetSprite(c.GetSpriteHeader() + "_Default");
         if (!isAlly)
         {
             sprite.rectTransform.localScale = new Vector3(-1, 1, 1);
@@ -165,18 +192,31 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         tooltip.SetAbility(actor, ability, this);
     }
 
-    public void CreatePopUpText(string message, Color color, float delay = 0f)
-    {
-        StartCoroutine(SpawnText(message, color, delay));
+    public void SetToolTipActive(bool isActive){
+        if (targetedState == TargetedState.Targeted){
+            tooltip.gameObject.SetActive(isActive);
+        }
     }
 
-    IEnumerator SpawnText(string message, Color color, float delay){
-        yield return new WaitForSeconds(delay);
-        GameObject text = Instantiate(popupText, gameObject.transform);
-        PopupText pop = text.GetComponent<PopupText>();
-        pop.SetMessage(message);
-        pop.SetColor(color);
-        pop.SetOffest(new Vector3(Random.Range(-50f, 50f), 250f, 0f));
+    public void CreatePopUpText(string message, Color color)
+    {
+        popups.QueueMessage(message, color);
+    }
+
+    public bool IsFinishedPopupText(){
+        return popups.IsEmpty();
+    }
+
+    public enum UnitLight{ attack, hurt }
+    public void SetLight(UnitLight light, bool isOn){
+        switch(light){
+            case UnitLight.attack:
+                attackLight.gameObject.SetActive(isOn);
+                break;
+            case UnitLight.hurt:
+                hurtLight.gameObject.SetActive(isOn);
+                break;
+        }
     }
 
     public void SetSprite(string name, float time = 0.0f){
@@ -186,7 +226,7 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                 Debug.Log("Sprite is null. Missing " + name);
             }
             sprite.sprite = s;
-        } else {
+        } else if (gameObject.activeInHierarchy){
             StartCoroutine(DelayedSprite(name, time));
         }
     }
@@ -196,14 +236,42 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         sprite.sprite = SpriteLibrary.GetCharSprite(name);
     }
 
+    public void SetEffectSprite(string name){
+        if (name == null){
+            effectSprite.sprite = null;
+            effectSprite.enabled = false;
+        }
+        else {
+            effectSprite.sprite = SpriteLibrary.GetAbilityEffectSprite(name);
+            effectSprite.enabled = true;
+        }
+    }
+
+    public void SetParticleEffect(AbilityParticleEffect abilityParticle){
+        
+        if (abilityParticle == null){
+            backSprite.enabled = false;
+        }
+        else {
+            backSprite.enabled = true;
+            backSprite.color = abilityParticle.color;
+            particleEffects.textureSheetAnimation.SetSprite(0, abilityParticle.particle);
+            var velocity = particleEffects.velocityOverLifetime;
+            velocity.y = abilityParticle.direction;
+            var color = particleEffects.main;
+            color.startColor = abilityParticle.color;
+            particleEffects.Play();
+        }
+    }
+
     public void Die(){
         UnitTeam.MoveUnit(this, 4);
-        SetSprite(character.className+"_Hurt");
+        SetSprite(character.GetSpriteHeader() +"_Hurt");
         fade = true;
         TurnOffUIElemenets();
     }
 
-    public void OnPointerClick(PointerEventData p)
+    public virtual void OnPointerClick(PointerEventData p)
     {
         if (p.button == PointerEventData.InputButton.Left)
         {
@@ -216,17 +284,36 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         }
     }
 
-    public void OnPointerEnter(PointerEventData p)
+    public virtual void OnPointerEnter(PointerEventData p)
     {
         if (tooltip.currentAbility != null && showUI){
-            tooltip.gameObject.SetActive(true);
-            health.ShowIndicators(true);
+            if (tooltip.currentAbility.isAOE){
+                foreach(Unit u in UnitTeam.GetUnits()){
+                    u.SetChangeIndicators(true);
+                    u.SetToolTipActive(true);
+                }
+            }
+            else {
+                SetChangeIndicators(true);
+                tooltip.gameObject.SetActive(true);
+            }
         }
     }
-    public void OnPointerExit(PointerEventData p)
+    public virtual void OnPointerExit(PointerEventData p)
     {
-        tooltip.gameObject.SetActive(false);
-        health.ShowIndicators(false);
+        if (tooltip.currentAbility == null){
+            return;
+        }
+        if (tooltip.currentAbility.isAOE){
+            foreach(Unit u in UnitTeam.GetUnits()){
+                u.SetChangeIndicators(false);
+                u.SetToolTipActive(false);
+            }
+        }
+        else {
+            SetChangeIndicators(false);
+            tooltip.gameObject.SetActive(false);
+        }
     }
     
     public void TurnOffUIElemenets(){
@@ -249,5 +336,17 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         else {
             health.RemoveActionIndicator();
         }
+    }
+
+    public void SetChangeIndicators(bool isOn){
+        if (targetedState == TargetedState.Targeted){
+            health.ShowIndicators(isOn);
+        }
+        
+    }
+
+    public void Panic(){
+        gs.gc.StartCoroutine(gs.gc.ExecuteInitialAfflictionTurn(this));
+        health.SetAffliction(true);
     }
 }

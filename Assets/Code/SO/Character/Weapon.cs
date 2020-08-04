@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Create Weapon")]
+[CreateAssetMenu(menuName = "Character/Create Weapon")]
 public class Weapon : ScriptableObject
 {
     public string weaponName;
@@ -16,6 +16,8 @@ public class Weapon : ScriptableObject
     public Ability petwerSpecial;
     public Ability zincSpecial;
     public Ability brassSpecial;
+
+    public string description;
 
     public List<Ability> GetAbilities(string characterClass)
     {//Potential TODO: make class enum?

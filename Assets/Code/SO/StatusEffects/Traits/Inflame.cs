@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Inflame : Traits
 {
+    public override string traitName => "Inflame";
     int bonusDamage;
     int bonusCrit;
     public Inflame(){}
 
     public override float GetStat(StatType type, Unit actor = null, Unit target = null){
+        if (target == null){
+            return 0;
+        }
         if (type == StatType.damage && target.stats.modifiers.IsBleed){
             return bonusDamage;
         }

@@ -20,9 +20,13 @@ MonoBehaviour:
   isSelf: 0
   cancelDisplay: 0
   isRanged: 0
+  usableOutOfComabat: 0
+  actorParticles: {fileID: 0}
   selfEffects: []
   targetEffects:
   - Stun
+  spriteType: 0
+  targetPartcles: {fileID: 11400000, guid: 5eb47c8fbd2e076488d2455972013029, type: 2}
   ai: {fileID: 0}
   accmod: 90
   critmod: 0

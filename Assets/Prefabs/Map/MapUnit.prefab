@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   location: {fileID: 0}
   map: {fileID: 0}
-  moveTime: 0.5
+  moveTime: 0.25
   route: []
   waypoints: []
   units: {fileID: 11400000, guid: 3fc93b9609a24d04ead29852c040aab2, type: 2}

@@ -5,10 +5,15 @@ using UnityEngine.UI;
 
 public class ToggleMenu : MonoBehaviour
 {
-    public List<ToggleButton> toggles;
+    protected List<ToggleButton> toggles;
+    
     void Awake(){
         toggles = new List<ToggleButton>(GetComponentsInChildren<ToggleButton>());
+        foreach(ToggleButton tb in toggles){
+            tb.group = this;
+        }
     }
+
     void Start(){
          for (int i = 0; i < toggles.Count; ++i){
             if (i == 0){
@@ -17,7 +22,6 @@ public class ToggleMenu : MonoBehaviour
             else {
                 toggles[i].Deselect();
             }
-            toggles[i].group = this;
         }
     }
     public void SelectToggle(ToggleButton tb){
@@ -31,8 +35,9 @@ public class ToggleMenu : MonoBehaviour
     }
 
     public void SelectToggle(string menu){
+        Debug.Log(menu);
         foreach(ToggleButton t in toggles){
-            if (t.menuName == menu){
+            if (t.GetMenu() == menu){
                 t.Select();
             } else {
                 t.Deselect();

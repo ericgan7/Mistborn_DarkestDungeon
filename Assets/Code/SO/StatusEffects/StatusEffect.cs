@@ -41,6 +41,7 @@ public abstract class StatusEffect : Effect
 
 public abstract class Traits : StatusEffect
 {
+    public virtual string traitName {get {return ""; }}
     public override bool IsPermanant => true;
     public override EffectType Type => EffectType.baseClass;
 

@@ -13,17 +13,21 @@ MonoBehaviour:
   m_Name: Protect
   m_EditorClassIdentifier: 
   abilityName: Protect
-  icon: {fileID: 21300000, guid: 8f0401b5efa349d41bf6b546b636f831, type: 3}
-  targetable: {fileID: 11400000, guid: 4d63d3e20506cfd48ba11bab6082d2ee, type: 2}
   usable: {fileID: 11400000, guid: 4d63d3e20506cfd48ba11bab6082d2ee, type: 2}
-  metalCost: 0
+  targetable: {fileID: 11400000, guid: 4d63d3e20506cfd48ba11bab6082d2ee, type: 2}
+  metalCost: 1
+  ammoCost: 0
   isAOE: 0
   isSelf: 0
   cancelDisplay: 0
   isRanged: 0
+  usableOutOfComabat: 0
+  actorParticles: {fileID: 0}
   selfEffects: []
   targetEffects:
   - StressHeal 2
   - Guard 3
   - Acc 5 3
+  spriteType: 1
+  targetPartcles: {fileID: 0}
   ai: {fileID: 0}

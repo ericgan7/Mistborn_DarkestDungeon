@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Affliction : Traits
+public abstract class Affliction : Traits
 {
     public virtual bool CanBuff { get { return true; } }
     public virtual string AfflictionName { get { return ""; }}

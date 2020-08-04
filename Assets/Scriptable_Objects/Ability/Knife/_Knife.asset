@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: _Knife
   m_EditorClassIdentifier: 
   weaponName: Knife
-  weaponIcon: {fileID: 21300000, guid: a2a9055464fa5d640a4d9993d087007b, type: 3}
+  weaponIcon: {fileID: 21300000, guid: 15eb646bb1e6931419a725383c976e64, type: 3}
   damage: {x: 0, y: 2}
   weaponAbilities:
   - {fileID: 11400000, guid: 6cf3f0733cbe95c478c2021895eb21e1, type: 2}
   - {fileID: 11400000, guid: eeee65b6defad8848968f3383f8157be, type: 2}
-  - {fileID: 11400000, guid: 8ad5309b634fffa4583839b221ff59d9, type: 2}
   steelSpecial: {fileID: 11400000, guid: 8ad5309b634fffa4583839b221ff59d9, type: 2}
   ironSpecial: {fileID: 0}
   tinSpecial: {fileID: 0}
   petwerSpecial: {fileID: 0}
-  zincSpecial: {fileID: 0}
+  zincSpecial: {fileID: 11400000, guid: 3f5169e551808cb47a31243f44bfe97a, type: 2}
   brassSpecial: {fileID: 0}
+  description: Wields a long knife. A fast an manuverable weapon that can be thrown
+    or used up close. Leaves painful and ragged wounds

@@ -11,18 +11,18 @@ public class GameState : MonoBehaviour
     public GameController gc;
     public InputController ic;
     public UIController uic;
+
     public AlarmManager am;
+    public MetalManager metal;
     
     public MapController map;
-
-    public EventManager dm;
+    public DialogueManager dm;
 
     public HeroRoster hr;
-
     public Team ally;
     public Team enemy;
 
-    public ResourceManager resources;
+    public TeamResource resources;
 
     public Inventory inventory;
     
@@ -39,6 +39,6 @@ public class GameState : MonoBehaviour
         }
         SpriteLibrary.Init();
         resources.load();
-        //EffectLibrary.Init();
+        inventory.Init();
     }
 }

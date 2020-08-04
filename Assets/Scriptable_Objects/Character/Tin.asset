@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa85cb59376a3ff4db9cfbdf6a61a3fc, type: 3}
+  m_Name: Tin
+  m_EditorClassIdentifier: 
+  characterName: Tin
+  className: Tin
+  abilities:
+  - {fileID: 11400000, guid: 359e6f77154e15941a1724637a34a628, type: 2}
+  - {fileID: 11400000, guid: 83401168131970540ac3420771472046, type: 2}
+  - {fileID: 11400000, guid: 37d52d85a7134f04abaced46b8c284da, type: 2}
+  - {fileID: 11400000, guid: 590b5597b849f054bbc5cbc82e5464f8, type: 2}
+  movement: {fileID: 11400000, guid: 97d69da85d3ce0245ac2842ba1f481f0, type: 2}
+  equippedItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  ctraits:
+  - Tin
+  characterClass: {fileID: 11400000, guid: ff9790f1568733145a526cd8ea82a39e, type: 2}
+  currentWeapon: {fileID: 11400000, guid: 1d17522c5b4591647ad023abc9c7f96b, type: 2}
+  weapons:
+  - {fileID: 11400000, guid: 1d17522c5b4591647ad023abc9c7f96b, type: 2}
+  - {fileID: 11400000, guid: aa1a864b6523d954e8c3504697faa86d, type: 2}
+  health: 10
+  defense: 3
+  will: 5
+  crit: 5
+  acc: 10
+  dmg: 4
+  speed: 4
+  dodge: 20
+  bleedResist: 30
+  stunResist: 20
+  moveResist: 50
+  debuffResist: 50
+  stressResist: 0
+  virtue: 0
+  ai: {fileID: 0}

@@ -8,6 +8,7 @@ public class AbilityResultList
     public Ability ability;
     public List<AbilityResult> targets;
     public List<AbilityResult> counter;
+    public List<DelayedAbilityResult> stress;
 
     public bool display;
     public List<DelayedAbilityResult> delayedEffects;
@@ -17,6 +18,7 @@ public class AbilityResultList
         targets = new List<AbilityResult>();
         delayedEffects = new List<DelayedAbilityResult>();
         counter = new List<AbilityResult>();
+        stress = new List<DelayedAbilityResult>();
     }
 
 }
@@ -39,21 +41,24 @@ public class DelayedAbilityResult {
         {EffectType.stress, "Stress"}
     };
 
-    public void Display(float delay = 0f)
+    public void Display()
     {
         if (delayedEffect.Type == EffectType.none){
             return;
         }
         if (result == DelayedResult.resist)
         {
-            target.CreatePopUpText("Resisted", ColorPallete.GetEffectColor(delayedEffect.Type), delay);
-        } else
+            target.CreatePopUpText("Resisted", ColorPallete.GetEffectColor(delayedEffect.Type));
+        } else if (delayedEffect.Type == EffectType.stress){
+            target.CreatePopUpText(string.Format("{0}: {1}", 
+                effectNames[delayedEffect.Type], ((Stress) delayedEffect).StressDamage(target)), ColorPallete.GetEffectColor(EffectType.stress));
+        } else 
         {
-            target.CreatePopUpText(effectNames[delayedEffect.Type], ColorPallete.GetEffectColor(delayedEffect.Type), delay);
+            target.CreatePopUpText(effectNames[delayedEffect.Type], ColorPallete.GetEffectColor(delayedEffect.Type));
         }
     }
 
-    public void Apply(Unit actor)
+    public void ApplyEffect(Unit actor)
     {
         if (result == DelayedResult.hit)
         {
@@ -70,31 +75,32 @@ public class AbilityResult {
 
     public static AbilityResult None = new AbilityResult(){ target = null, amount = 0, result = Result.none};
 
-    public void Display(float delay = 0f)
+    public void Display()
     {
         switch (result)
         {
-            case Result.miss:
-                target.CreatePopUpText("Miss", ColorPallete.GetResultColor(result));
+            case Result.none:
                 break;
-            case Result.buff:
-                target.CreatePopUpText("Buff", ColorPallete.GetResultColor(result));
+            case Result.Hit:
+            case Result.Graze:
+            case Result.Crit:
+                target.CreatePopUpText(amount.ToString(), ColorPallete.GetResultColor(result));
                 break;
             default:
-                target.CreatePopUpText(amount.ToString(), ColorPallete.GetResultColor(result));
+                target.CreatePopUpText(result.ToString(), ColorPallete.GetResultColor(result));
                 break;
         }
         ApplyEffects();
     }
 
-    public void ApplyEffects()
+    public int ApplyEffects()
     {
         switch (result)
         {
-            case Result.def:
+            case Result.Def:
                 target.stats.GainArmor(amount);
                 break;
-            case Result.heal:
+            case Result.Heal:
                 target.stats.Heal(amount);
                 break;
             default:
@@ -102,6 +108,7 @@ public class AbilityResult {
                 break;
         }
         target.UpdateUI();
+        return amount;
     }
     //need enough to determine animation
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthManager : MonoBehaviour
 {
     [SerializeField] ProgressBar healthBar;
-    [SerializeField] ProgressBar stressBar;
+    [SerializeField] StresssBar stressBar;
     [SerializeField] PipBar defenseBar;
     [SerializeField] Unit unit;
     [SerializeField] ActionPip actions;
@@ -15,7 +15,7 @@ public class HealthManager : MonoBehaviour
         Vector2Int hp = unit.stats.Health();
         healthBar.Init(hp.x, hp.y);
         Vector2Int stress = unit.stats.Will();
-        stressBar.Init(stress.x, stress.y);
+        stressBar.Init(0, stress.y);
         Vector2Int def = unit.stats.Defense();
         defenseBar.Init(def.x, def.y);
     }
@@ -24,16 +24,24 @@ public class HealthManager : MonoBehaviour
     {
         if (unit.stats.Defense().x > 0){
             defenseBar.SetIndicator(damageRange.x);
-            int amount = Mathf.Min(damageRange.x, unit.stats.Defense().x);
-            damageRange.x -= amount;      
+            int amount = Mathf.Min(Mathf.Abs(damageRange.x), unit.stats.Defense().x);
+            damageRange.x += amount;    //damage is always negative, so we add defense;
         }
-        if (damageRange.x >= 0){
-            healthBar.SetIndicator(-1* damageRange.x);
+        if (damageRange.x <= 0){
+            healthBar.SetIndicator(damageRange.x);
         }
     }
 
     public void SetHealIndicators(Vector2Int healRange){
-        
+        defenseBar.SetIndicator(healRange.x);
+    }
+
+    public void SetStressIndicators(int stressRange){
+        stressBar.SetIndicator(stressRange);
+    }
+
+    public void SetAffliction(bool affliction){
+        stressBar.SetAfflicted(affliction);
     }
 
     public void ExecuteUpdate(){
@@ -45,6 +53,7 @@ public class HealthManager : MonoBehaviour
     public void ShowIndicators(bool isOn){
         healthBar.ShowIndicator(isOn);
         defenseBar.ShowIndicator(isOn);
+        stressBar.ShowIndicator(isOn);
     }
 
     public void AddActionIndicator(){

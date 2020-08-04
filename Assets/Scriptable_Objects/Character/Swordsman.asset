@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa85cb59376a3ff4db9cfbdf6a61a3fc, type: 3}
   m_Name: Swordsman
   m_EditorClassIdentifier: 
-  characterName: Swordsman Guard
-  className: Swordsman
-  portrait: {fileID: 0}
+  characterName: Swordsman
   abilities:
   - {fileID: 11400000, guid: 9110d0b9f572da24b87f4412449377a3, type: 2}
   - {fileID: 11400000, guid: 9520efcc26ec8d844be6720af827606a, type: 2}
@@ -23,6 +21,7 @@ MonoBehaviour:
   ctraits: []
   characterClass: {fileID: 0}
   currentWeapon: {fileID: 0}
+  weapons: []
   health: 10
   defense: 5
   will: 3
@@ -36,4 +35,5 @@ MonoBehaviour:
   moveResist: 10
   debuffResist: 10
   stressResist: 0
+  virtue: 0
   ai: {fileID: 11400000, guid: 357be2f1d001e8744bb71f73152ca770, type: 2}

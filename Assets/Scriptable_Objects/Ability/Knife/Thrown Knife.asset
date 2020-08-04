@@ -20,9 +20,13 @@ MonoBehaviour:
   isSelf: 0
   cancelDisplay: 0
   isRanged: 1
+  usableOutOfComabat: 0
+  actorParticles: {fileID: 0}
   selfEffects:
   - Acc 5 3
   targetEffects: []
+  spriteType: 1
+  targetPartcles: {fileID: 0}
   ai: {fileID: 0}
   accmod: 90
   critmod: 5

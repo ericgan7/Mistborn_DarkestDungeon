@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Focus : Traits
 {
+    public override string traitName => "Focus";
     int stacks;
     int markAccBonus;
     int critBonus;
@@ -36,8 +37,8 @@ public class Focus : Traits
 
     public override string ToString(){
         return string.Format(
-            "{0} <color={4}><b>Focus</b></color>: Gives +{1}% Crit per stack (+{2}% Crit)\n" +
-            "Focus: Gain +{3} Accuracy when attacking marked targets.\n",
+            "{0} <color={4}><b>Focus</b></color>: Gain 1 stack when attacking marked targets. Gives +{1}% Crit per stack\n" + 
+            "<color={4}><b>Focus</b></color> : Gives +{3} accuracy against marked targets\n",
             stacks, critBonus, critBonus*stacks, markAccBonus, 
             ColorPallete.GetHexColor("Red"));
     }

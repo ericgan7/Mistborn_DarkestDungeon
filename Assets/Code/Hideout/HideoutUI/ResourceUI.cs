@@ -12,7 +12,7 @@ public class ResourceUI : MonoBehaviour
     public TextMeshProUGUI weapons;
 
     GameState state;
-    ResourceManager resources;
+    TeamResource resources;
 
     public void Awake(){
         state = FindObjectOfType<GameState>();
@@ -23,6 +23,6 @@ public class ResourceUI : MonoBehaviour
         gold.text = resources.gold.ToString();
         intel.text = resources.intel.ToString();
         metal.text = resources.metal.ToString();
-        weapons.text = resources.weaponParts.ToString();
+        // weapons.text = resources.weaponParts.ToString();
     }
 }

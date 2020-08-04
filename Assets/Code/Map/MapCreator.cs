@@ -56,6 +56,6 @@ public class MapCreator : MonoBehaviour, IPointerClickHandler
         foreach(Vector2Int coord in coords.Keys){
             layout.rooms.Add(coord);
         }
-        AssetDatabase.CreateAsset(layout, "Assets/Scriptable_Objects/Map/" + MapName + ".asset");
+        //AssetDatabase.CreateAsset(layout, "Assets/Scriptable_Objects/Map/" + MapName + ".asset");
     }
 }

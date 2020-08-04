@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Ability Preferences")]
+[CreateAssetMenu(menuName = "AI/List of Target Preferences")]
 public class AIPreferences : ScriptableObject
 {
     public List<TargetDesire> targetDesires;

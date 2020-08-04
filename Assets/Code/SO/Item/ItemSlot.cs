@@ -9,41 +9,71 @@ public class ItemSlot : MonoBehaviour
 {
     public Image background;
     public ItemObj currentItem;
+    public int slotId;
 
     public bool temporary;
-    public RewardBox tempParent;
+    //public RewardBox tempParent;
     public bool equipOnly;
+    public ItemTray parentTray;
+    [SerializeField] RectTransform rectTransform;
+    public Vector2 Size {get {return rectTransform.sizeDelta; }}
 
-    public void SwapItems(ItemSlot target){
-        if (target.currentItem != null && currentItem != null &&
-        currentItem.item.itemType == target.currentItem.item.itemType){
-            int remaining = currentItem.item.AddAmount(target.currentItem.item.amount);
+    public void Init(int id, ItemTray tray){
+        slotId = id;
+        parentTray = tray;
+    }
+
+    public void SetPosition(Vector2 pos){
+        rectTransform.anchoredPosition = pos;
+    }
+
+    public void SetItem(ItemObj obj){
+        currentItem = obj;
+        UpdateItemPosition();
+    }
+
+    public virtual int SwapItems(ItemSlot target){
+        Debug.Log("swaping");
+        int remaining = 0;
+        if (currentItem != null && currentItem.SameItem(target.currentItem)){
+            remaining = currentItem.AddAmount(target.currentItem);
+            Debug.Log(remaining);
             if (remaining > 0) {
-                target.currentItem.item.amount = remaining;
+                target.currentItem.SetAmount(remaining);
             } else {
                 target.currentItem = null;
-                target.UpdateItemPosition();
             }
         } else {
             ItemObj temp = currentItem;
             currentItem = target.currentItem;
             target.currentItem = temp;
-            target.UpdateItemPosition();
         }
         UpdateItemPosition();
+        target.UpdateItemPosition();
+        return remaining;
     }
 
-    public void UpdateItemPosition(){
+    public void UpdateItemPosition(){  
         if (currentItem == null){
             if (temporary){
-                tempParent.CheckClose();
+                //tempParent.CheckClose();
                 Destroy(gameObject);
             }
             return;
         }
-        currentItem.slot = this;
-        currentItem.transform.parent = transform;
-        currentItem.rt.anchoredPosition = Vector3.zero;
+        else {
+            currentItem.SetSlot(this);
+        }
+        
+    }
+
+    public bool HasItem(){
+        return currentItem != null;
+    }
+
+    public void BringToFront(){
+        transform.SetAsLastSibling();
     }
 
 }
+

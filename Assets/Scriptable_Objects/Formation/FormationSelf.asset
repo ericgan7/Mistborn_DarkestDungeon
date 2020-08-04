@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: FormationSelf
   m_EditorClassIdentifier: 
   ranks: 00000000
+  single: {fileID: 0}
+  aoe: {fileID: 0}
+  self: 1

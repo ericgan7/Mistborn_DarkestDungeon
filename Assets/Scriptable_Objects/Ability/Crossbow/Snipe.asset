@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08198c06f6adc1b41a33a2565211fcfd, type: 3}
+  m_Name: Snipe
+  m_EditorClassIdentifier: 
+  abilityName: Snipe
+  usable: {fileID: 11400000, guid: 69e9e576ca3727647b505b57c65d8e2d, type: 2}
+  targetable: {fileID: 11400000, guid: f27261caf9ce0d149ad4b09b8f3fa748, type: 2}
+  metalCost: 0
+  isAOE: 0
+  isSelf: 0
+  cancelDisplay: 0
+  isRanged: 1
+  usableOutOfComabat: 0
+  actorParticles: {fileID: 0}
+  selfEffects: []
+  targetEffects: []
+  spriteType: 1
+  targetPartcles: {fileID: 0}
+  ai: {fileID: 0}
+  accmod: 90
+  critmod: 5
+  dmgmod: 100
+  targetTraits:
+  - Mark 2

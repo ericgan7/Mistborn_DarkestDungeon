@@ -23,28 +23,27 @@ public class Ability_Attack : Ability
         }
     }
 
-    public Result RollAccuracy(Unit actor, Unit target)
+    public Result RollAccuracy(Unit actor, Unit target, int roll)
     {
         if (target.stats.Block())
         {
-            return Result.block;
+            return Result.Block;
         }
         int acc = actor.stats.GetStat(StatType.acc, target) + accmod;
         int dodge = target.stats.GetStat(StatType.dodge);
         int hitchance = Mathf.Clamp(acc - dodge,0 ,95);
         int grazechance = Mathf.Clamp(hitchance - dodge, 0, 95);
-        int roll = Random.Range(0, 100);
         if (roll > acc)
         {
-            return Result.miss;
+            return Result.Miss;
         }
         else if (roll > hitchance)
         {
-            return Result.dodge;
+            return Result.Dodge;
         }
         else if (roll > grazechance)
         {
-            return Result.graze;
+            return Result.Graze;
         }
         return RollCrit(actor, critmod);
     }
@@ -55,29 +54,30 @@ public class Ability_Attack : Ability
         int critchance = Mathf.Clamp(actor.stats.GetStat(StatType.crit) + mod, 0, 100);
         if (critroll > critchance)
         {
-            return Result.hit;
+            return Result.Hit;
         }
         else
         {
             actor.stats.modifiers.UpdateOnAction(EffectType.crit);
-            return Result.crit;
+            return Result.Crit;
         }
     }
 
-    public override void ApplyAbility(Team targets, Unit actor, Unit target, ref AbilityResultList results)
+    public override void ApplyAbility(Unit actor, Unit target, ref AbilityResultList results)
     {
+        int roll = Random.Range(0, 100);
         if (isAOE)
         {
-            foreach(Unit u in targets.GetUnits())
+            foreach(Unit u in target.UnitTeam.GetUnits())
             {
                 if (u.targetedState == TargetedState.Targeted)
                 {
-                    ApplyDamage(actor, u, ref results);
+                    ApplyDamage(actor, u, roll, ref results);
                 }
             }
         }else
         {
-            ApplyDamage(actor, target, ref results);
+            ApplyDamage(actor, target, roll, ref results);
         }
         foreach (Effect e in SelfBuffs)
         {
@@ -85,13 +85,13 @@ public class Ability_Attack : Ability
         }
     }
 
-    private void ApplyDamage(Unit actor, Unit target, ref AbilityResultList results)
+    protected void ApplyDamage(Unit actor, Unit target, int roll, ref AbilityResultList results)
     {
         if (target.stats.modifiers.IsGuard){
             target = target.stats.modifiers.Guard.GetTarget();
         }
-        Result r = RollAccuracy(actor, target);
-        if (r == Result.miss || r == Result.dodge || r == Result.block)
+        Result r = RollAccuracy(actor, target, roll);
+        if (r == Result.Miss || r == Result.Dodge || r == Result.Block)
         {
             //miss/block
             results.targets.Add(new AbilityResult()
@@ -107,7 +107,7 @@ public class Ability_Attack : Ability
         else
         {
             //apply damage
-            float multiplier = r == Result.crit ? 2 : 1;
+            float multiplier = r == Result.Crit ? 2 : 1;
             results.targets.Add(new AbilityResult()
             {
                 actor = actor,
@@ -127,7 +127,7 @@ public class Ability_Attack : Ability
 
     public void ApplyCounter(Unit actor, Unit target, ref AbilityResultList results){
         Result counterResult = RollCrit(target, 0);
-        float crit = counterResult == Result.crit ? 1.5f: 1f;
+        float crit = counterResult == Result.Crit ? 1.5f: 1f;
         results.counter.Add(new AbilityResult()
         {
             actor = target,
@@ -137,7 +137,7 @@ public class Ability_Attack : Ability
         });
     }
 
-    public int GetDamage(Unit actor, Unit target){
+    public virtual int GetDamage(Unit actor, Unit target){
         int damage = actor.stats.GetStat(StatType.damage, target);
         //ability trait targets
         foreach (TraitTarget t in Traits){

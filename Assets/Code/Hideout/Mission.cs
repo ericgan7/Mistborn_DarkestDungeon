@@ -15,7 +15,7 @@ public class Mission : ScriptableObject
     public MissionDistrict district;
     public MissionType type;
     public int difficulty;
-    public List<ItemReward> rewards;
+    //public List<ItemReward> rewards;
     public Vector2 position;
     public int maxTeamSize;
 }

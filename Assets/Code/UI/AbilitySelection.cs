@@ -5,18 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 public class AbilitySelection : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    DetailedCharacterMenu parent;
+    [SerializeField] DetailedCharacterMenu parent;
     Ability currentAbility;
     public Image icon;
     public Image highlight;
-    public Tooltip tooltip;
+    [SerializeField]AbilityTooltip tooltip;
     bool selected;
     [SerializeField] bool isEquipment;
 
-
-    public void Awake(){
-        parent = GetComponentInParent<DetailedCharacterMenu>();
-    }
     public void SetAbility(Ability ability, bool isSelected){
         currentAbility = ability;
         if (ability == null){
@@ -40,16 +36,14 @@ public class AbilitySelection : MonoBehaviour, IPointerClickHandler, IPointerEnt
     }
 
     public void OnPointerClick(PointerEventData pointer){
-        if (currentAbility == null || isEquipment){
+        if (currentAbility == null || isEquipment || parent == null){
             return;
         }
         if (selected){
-            Debug.Log("trying to deselect");
             parent.DeselectSkill(currentAbility);
             highlight.enabled = false;
             selected = false;
         }else {
-            Debug.Log("trying to select");
             if (parent.SelectSkill(currentAbility)){
                 selected = true;
                 highlight.enabled = true;

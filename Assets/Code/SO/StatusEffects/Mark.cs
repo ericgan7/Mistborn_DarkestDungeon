@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mark : Traits
+public class Mark : StatusEffect
 {
     public override bool IsMark => true;
     public override EffectType Type => EffectType.mark;

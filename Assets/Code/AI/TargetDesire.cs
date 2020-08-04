@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Target Desire")]
+[CreateAssetMenu(menuName ="AI/Target Perference")]
 public class TargetDesire : ScriptableObject
 {
     public TargetDesireType type;

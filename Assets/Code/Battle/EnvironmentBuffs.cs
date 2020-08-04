@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName="Environment Buffs")]
+[CreateAssetMenu(menuName="Environment/Environment Buffs")]
 public class EnvironmentBuffs : ScriptableObject
 {
     public int stress;
@@ -24,7 +24,7 @@ public class EnvironmentBuffs : ScriptableObject
         return stress;
     }
 
-    public virtual string GetString(){
+    public override string ToString(){
         string result = "";
         if (metalMod != 0){
             result += string.Format("Metallic Ability Cost {0}{1}\n", metalMod > 0 ? "+" : "-", metalMod);

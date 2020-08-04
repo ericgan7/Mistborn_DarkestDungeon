@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Item/Gold")]
+[CreateAssetMenu(menuName = "Item/Value Item")]
 [System.Serializable]
 public class Item : ScriptableObject
 {   
@@ -13,51 +13,28 @@ public class Item : ScriptableObject
     public virtual bool IsUsable (Unit currrent, bool isCombat = true) {return false;}
     public virtual bool IsEquipable { get {return false;}}
 
+    public virtual void UseItem(Unit actor){}
+    public virtual void EquipItem(Unit actor) {}
+
     public override string ToString(){
         return string.Format("{0}\nValue: {1}\n", itemName, value);
     }
 }
 
-public abstract class UsableItem : Item
+public static class ItemLibrary 
 {
-    public bool IsSelf;
-    public abstract void UseItem(Unit target, GameState gs);
-}
-
-[CreateAssetMenu(menuName="Test/ItemInstance")]
-public class ItemInstance : ScriptableObject
-{
-    public Item itemType;
-    public int amount;
-    public ItemInstance(Item i, int a)
-    {
-        itemType = i;
-        amount = a;
-    }
-
-    public int AddAmount(int additionalAmount)
-    {
-        amount += additionalAmount;
-        if (amount > itemType.max_amount)
-        {
-            return amount - itemType.max_amount;
+    public static List<ItemAmount> GenerateAmounts(List<Item> rewards, int value){
+        List<ItemAmount> items = new List<ItemAmount>();
+        int roll;
+        foreach (Item item in rewards){
+            roll = Random.Range(0, Mathf.FloorToInt((float) value / (float) item.value));
+            int total = Mathf.CeilToInt((float) roll / (float)item.max_amount);
+            for (int i = 0; i < total; ++i){
+                ItemAmount instance  = new ItemAmount(item, Mathf.Min(item.max_amount, roll));
+                roll -= item.max_amount;
+                items.Add(instance);
+            }
         }
-        return 0;
-    }
-
-    public bool RemoveAmount(int removedAmount){
-        amount -= removedAmount;
-        if (amount > 0){
-            return true;
-        }
-        return false;
-    }
-
-    public int UseItem(Unit currentUnit, GameState gs){
-        if (itemType.IsUsable(currentUnit, true)){
-            ((UsableItem)itemType).UseItem(currentUnit, gs);
-            --amount;
-        }
-        return amount;
+        return items;
     }
 }

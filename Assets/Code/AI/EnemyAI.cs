@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Enemy AI")]
+[CreateAssetMenu(menuName = "AI/Ability Preference")]
 public class EnemyAI : ScriptableObject
 {
     public List<float> abilityPreferences;
@@ -19,7 +19,6 @@ public class EnemyAI : ScriptableObject
 
     public Decision MakeDecision(Unit actor, Team ally, Team enemy, List<Ability> abilities)
     {
-        Debug.Log(actor.stats.GetClassName());
         List<Decision> decisions = new List<Decision>();
         for (int i = 0; i < abilities.Count; ++i)
         {

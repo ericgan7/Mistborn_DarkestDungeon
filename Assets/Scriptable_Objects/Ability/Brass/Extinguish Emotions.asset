@@ -12,19 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08198c06f6adc1b41a33a2565211fcfd, type: 3}
   m_Name: Extinguish Emotions
   m_EditorClassIdentifier: 
-  abilityName: Extinguish Emotions
-  icon: {fileID: 21300000, guid: d0ce30c13be9c0141a340c8c1cd5eba5, type: 3}
-  targetable: {fileID: 11400000, guid: f27261caf9ce0d149ad4b09b8f3fa748, type: 2}
+  abilityName: Extinguish
   usable: {fileID: 11400000, guid: 694152f00a470154da46b4ef4e5d1282, type: 2}
-  metalCost: 0
+  targetable: {fileID: 11400000, guid: f27261caf9ce0d149ad4b09b8f3fa748, type: 2}
+  metalCost: 1
+  ammoCost: 0
   isAOE: 1
   isSelf: 0
   cancelDisplay: 0
-  isRanged: 0
+  isRanged: 1
+  usableOutOfComabat: 0
+  actorParticles: {fileID: 0}
   selfEffects: []
   targetEffects:
   - Stun
   - Stress 4
+  spriteType: 0
+  targetPartcles: {fileID: 11400000, guid: b9cc96be24e4e02469a9870d7da42d79, type: 2}
   ai: {fileID: 0}
   accmod: 90
   critmod: 0

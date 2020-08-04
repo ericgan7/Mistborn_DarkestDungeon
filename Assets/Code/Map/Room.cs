@@ -16,10 +16,8 @@ public class Room : MonoBehaviour, IPointerClickHandler
     public RectTransform rt;
     public Vector2Int coordinates;
     public MapController map;
-    bool enterTrigger;
+    EventDialogue roomEvent;
     bool exitTrigger;
-    public Event enterEvent;
-    public Event exitEvent;
 
     public RoomState state;
     public Image roomImage;
@@ -31,8 +29,6 @@ public class Room : MonoBehaviour, IPointerClickHandler
         rt = GetComponent<RectTransform>();
         coordinates = new Vector2Int((int) rt.anchoredPosition.x / 100, (int) rt.anchoredPosition.y / 100);
         map = FindObjectOfType<MapController>();
-        enterTrigger = true;
-        exitTrigger = true;
         state = RoomState.hidden;
         roomImage = GetComponent<Image>();
         SetRoomImage();
@@ -42,6 +38,15 @@ public class Room : MonoBehaviour, IPointerClickHandler
     public void SetPostion(Vector2Int coord){
         coordinates = coord;
         rt.anchoredPosition = new Vector2(coord.x * 100, coord.y * 100);
+    }
+
+    public void SetEvent(EventDialogue e){
+        roomEvent = e;
+        if (e == null){
+            exitTrigger = false;
+        } else {
+            exitTrigger = e.ignore != null;
+        }
     }
 
     public bool IsNear(Room room){
@@ -58,16 +63,18 @@ public class Room : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData p)
     {
-        Debug.Log("clicked on room " + id.ToString());
         map.MoveToRoom(this);
     }
 
     public void OnRoomEnter()
     {
-        
+        map.SetUpRoom(roomEvent);
     }
 
-    public void AddTrap(Trap trap){
+    public void OnRoomExit(){
+        if (exitTrigger){
+            //auto trigger trap
+        }
     }
 
     public void HideRoom(){

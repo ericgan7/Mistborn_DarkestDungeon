@@ -12,7 +12,7 @@ public class MissionIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void Init(Mission mission){
         rectTransform.anchoredPosition = mission.position;
         for (int i = 0; i < rewardSlots.Count; ++i){
-            rewardSlots[i].SetItem(mission.rewards[i]);
+            //rewardSlots[i].SetItem(mission.rewards[i]);
         }
     }
     public void SetTooltip(bool active){

@@ -18,8 +18,11 @@ public class ProgressBar : MonoBehaviour
         values = new Vector2(current, max);
     }
 
-    public void SetIndicator(int amount){
+    public void SetIndicator(float amount){
         indicator.SetMode(changeMode.flash);
+        if (amount > 0){
+            Debug.Log(amount / values.y * max_x);
+        }
         indicator.SetPosition(values.x / values.y * max_x, amount / values.y * max_x);
     }
 

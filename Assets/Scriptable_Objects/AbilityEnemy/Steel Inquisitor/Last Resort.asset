@@ -10,22 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f9ce35fa3d5b0f4b9f583812a7743bc, type: 3}
-  m_Name: Suppress Fear
+  m_Name: Last Resort
   m_EditorClassIdentifier: 
-  abilityName: Suppress Fear
+  abilityName: Last Resort
   usable: {fileID: 11400000, guid: 4d63d3e20506cfd48ba11bab6082d2ee, type: 2}
-  targetable: {fileID: 11400000, guid: 69e9e576ca3727647b505b57c65d8e2d, type: 2}
-  metalCost: 1
+  targetable: {fileID: 11400000, guid: 309bc66c252cd7b4986e9158d059e343, type: 2}
+  metalCost: 0
   ammoCost: 0
-  isAOE: 1
+  isAOE: 0
   isSelf: 1
   cancelDisplay: 0
   isRanged: 0
   usableOutOfComabat: 0
-  actorParticles: {fileID: 0}
+  actorParticles: {fileID: 11400000, guid: a28b4dd1d0edb834a86cd0fc4fd64f26, type: 2}
   selfEffects:
-  - Stress -2
+  - Dodge 20 5
+  - Acc 50 5
+  - Crit 20 5
   targetEffects: []
   spriteType: 0
-  targetPartcles: {fileID: 11400000, guid: 37d70cd7152063b4cb9598aeaff5f143, type: 2}
-  ai: {fileID: 0}
+  targetPartcles: {fileID: 0}
+  ai: {fileID: 11400000, guid: 1367e81b12059ea49b1b8cfd8df1d3a9, type: 2}

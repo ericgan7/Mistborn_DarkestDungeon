@@ -103,8 +103,8 @@ public class MapController : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         }
         foreach(MapUnit u in patrols){
             //placeholder set up
-            u.SetPosition(rooms[layout.patrolPoints[1]]);
-            u.SetRoute(layout.patrolPoints);
+            u.SetPosition(rooms[u.startingPosition]);
+            u.SetRoute(new List<Vector2Int>(){u.waypoint});
         }
         units.transform.parent = gameObject.transform;
         units.transform.parent = map.transform;

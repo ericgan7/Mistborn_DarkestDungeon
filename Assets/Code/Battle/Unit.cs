@@ -150,6 +150,7 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         stats = new Stats(c, this, statusEffects);
         statusEffects.SetCharacter(c);
         stats.Init();
+        sprite.transform.localScale = UnitTeam.direction;
         ai = c.ai;
         SetSprite(c.GetSpriteHeader() + "_Default");
         if (!isAlly)

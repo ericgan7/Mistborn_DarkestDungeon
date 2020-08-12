@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa85cb59376a3ff4db9cfbdf6a61a3fc, type: 3}
+  m_Name: Inquisitor
+  m_EditorClassIdentifier: 
+  characterName: Steel Inquisitor
+  abilities:
+  - {fileID: 11400000, guid: 973052160c872e74aa40a698bebc77f1, type: 2}
+  - {fileID: 11400000, guid: 6031a3bcdc9cc094480d9c1acfd8b5fe, type: 2}
+  - {fileID: 11400000, guid: 82ec8f77450726f46baea029d8f260da, type: 2}
+  - {fileID: 11400000, guid: b448275dd3b42cc45b9c889096a6d928, type: 2}
+  movement: {fileID: 0}
+  equippedItems: []
+  ctraits: []
+  characterClass: {fileID: 0}
+  currentWeapon: {fileID: 0}
+  weapons: []
+  health: 50
+  defense: 20
+  will: 50
+  crit: 10
+  acc: 10
+  dmg: 6
+  speed: 3
+  dodge: 10
+  bleedResist: 30
+  stunResist: 30
+  moveResist: 30
+  debuffResist: 30
+  stressResist: 30
+  virtue: 0
+  ai: {fileID: 11400000, guid: 357be2f1d001e8744bb71f73152ca770, type: 2}

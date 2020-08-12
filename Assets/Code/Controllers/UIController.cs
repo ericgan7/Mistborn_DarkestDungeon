@@ -14,8 +14,6 @@ public class UIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI characterName;
     public TextMeshProUGUI[] stats;
 
-    public Slider currentTurn;
-
     public ActionDisplay action;
     public GameObject background;
     public AfflictionDisplay affliction;
@@ -59,6 +57,7 @@ public class UIController : MonoBehaviour
         //TODO get protrait sprite
         characterName.text = current.stats.GetName();
         equipmentMenu.SetUnit(current);
+        portrait.sprite = SpriteLibrary.GetPortrait(current.stats.GetName());
         for (int i = 0; i < stats.Length; ++i)
         {
             stats[i].text = GetStatText(current, i);

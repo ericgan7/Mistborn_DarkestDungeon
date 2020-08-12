@@ -18,12 +18,14 @@ public class MapUnit : MonoBehaviour
     public float moveTime;
     public List<Vector2Int> route;
     public List<Vector2Int> waypoints;
-    public EnemyGroup units;
     int wayPos;
     int routePos;
     bool moving;
     bool checkCombat;
     Behavior state;
+    [SerializeField] public Vector2Int startingPosition;
+    [SerializeField] public Vector2Int waypoint;
+    [SerializeField] public EnemyGroup units;
 
     public int vision;
     public bool isPlayer;
@@ -43,6 +45,7 @@ public class MapUnit : MonoBehaviour
 
     public void SetPosition(Vector2 position){
         rt.anchoredPosition = position;
+        Debug.Log(position);
     }
 
     public void SetPosition(Room room){

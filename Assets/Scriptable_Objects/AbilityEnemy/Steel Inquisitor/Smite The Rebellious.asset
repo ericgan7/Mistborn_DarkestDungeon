@@ -9,23 +9,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f9ce35fa3d5b0f4b9f583812a7743bc, type: 3}
-  m_Name: Suppress Fear
+  m_Script: {fileID: 11500000, guid: 08198c06f6adc1b41a33a2565211fcfd, type: 3}
+  m_Name: Smite The Rebellious
   m_EditorClassIdentifier: 
-  abilityName: Suppress Fear
+  abilityName: Smite The Rebellious
   usable: {fileID: 11400000, guid: 4d63d3e20506cfd48ba11bab6082d2ee, type: 2}
-  targetable: {fileID: 11400000, guid: 69e9e576ca3727647b505b57c65d8e2d, type: 2}
-  metalCost: 1
+  targetable: {fileID: 11400000, guid: 7c74a8e9ebef18d4c922c027062bceef, type: 2}
+  metalCost: 0
   ammoCost: 0
-  isAOE: 1
-  isSelf: 1
+  isAOE: 0
+  isSelf: 0
   cancelDisplay: 0
   isRanged: 0
   usableOutOfComabat: 0
   actorParticles: {fileID: 0}
-  selfEffects:
-  - Stress -2
-  targetEffects: []
+  selfEffects: []
+  targetEffects:
+  - Push -1
   spriteType: 0
-  targetPartcles: {fileID: 11400000, guid: 37d70cd7152063b4cb9598aeaff5f143, type: 2}
-  ai: {fileID: 0}
+  targetPartcles: {fileID: 0}
+  ai: {fileID: 11400000, guid: 1367e81b12059ea49b1b8cfd8df1d3a9, type: 2}
+  accmod: 100
+  critmod: 10
+  dmgmod: 1
+  targetTraits: []

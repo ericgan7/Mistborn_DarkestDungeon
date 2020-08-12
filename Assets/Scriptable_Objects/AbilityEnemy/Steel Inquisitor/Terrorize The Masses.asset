@@ -9,24 +9,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f9ce35fa3d5b0f4b9f583812a7743bc, type: 3}
-  m_Name: Soothe Pain
+  m_Script: {fileID: 11500000, guid: 08198c06f6adc1b41a33a2565211fcfd, type: 3}
+  m_Name: Terrorize The Masses
   m_EditorClassIdentifier: 
-  abilityName: Soothe Pain
+  abilityName: Terrorize The Masses
   usable: {fileID: 11400000, guid: 4d63d3e20506cfd48ba11bab6082d2ee, type: 2}
   targetable: {fileID: 11400000, guid: 4d63d3e20506cfd48ba11bab6082d2ee, type: 2}
-  metalCost: 1
+  metalCost: 0
   ammoCost: 0
-  isAOE: 0
-  isSelf: 1
+  isAOE: 1
+  isSelf: 0
   cancelDisplay: 0
   isRanged: 0
   usableOutOfComabat: 0
   actorParticles: {fileID: 0}
   selfEffects: []
   targetEffects:
-  - Defend 5
-  - Cleanse
+  - Stress 5
   spriteType: 0
-  targetPartcles: {fileID: 11400000, guid: 867becf1a2b3422449b00b7a2550bfd2, type: 2}
-  ai: {fileID: 0}
+  targetPartcles: {fileID: 11400000, guid: b9cc96be24e4e02469a9870d7da42d79, type: 2}
+  ai: {fileID: 11400000, guid: 1367e81b12059ea49b1b8cfd8df1d3a9, type: 2}
+  accmod: 90
+  critmod: 0
+  dmgmod: 0
+  targetTraits: []

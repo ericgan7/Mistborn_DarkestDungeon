@@ -49,7 +49,7 @@ public class HeroRoster : ScriptableObject
         //TODO randomly choose enmy prefabs within range
         //need to return copies of the scriptable object so they are inited properly
         List<Character> team = new List<Character>();
-        foreach(Character c in enemyPrefabs[0].characters){
+        foreach(Character c in enemyPrefabs[1].characters){
             if (c != null){
                 Character character = ScriptableObject.CreateInstance("Character") as Character;
                 character.Init(c);

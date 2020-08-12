@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Crossbowman
   m_EditorClassIdentifier: 
   characterName: Crossbowman
-  className: Crossbowman
-  portrait: {fileID: 0}
   abilities:
   - {fileID: 11400000, guid: bcaa1f2605eba81429327a2f807d5672, type: 2}
   - {fileID: 11400000, guid: 310305bff5951b24ba420b14ec794387, type: 2}
@@ -23,6 +21,7 @@ MonoBehaviour:
   ctraits: []
   characterClass: {fileID: 0}
   currentWeapon: {fileID: 0}
+  weapons: []
   health: 5
   defense: 5
   will: 5
@@ -36,4 +35,5 @@ MonoBehaviour:
   moveResist: 10
   debuffResist: 20
   stressResist: 20
+  virtue: 0
   ai: {fileID: 11400000, guid: 357be2f1d001e8744bb71f73152ca770, type: 2}

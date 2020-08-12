@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Spear Toss
   usable: {fileID: 11400000, guid: fa2815119293c3d4cbbc210268b18246, type: 2}
-  targetable: {fileID: 11400000, guid: 7c74a8e9ebef18d4c922c027062bceef, type: 2}
+  targetable: {fileID: 11400000, guid: 279d241ce1694f04e8fbd0dd58ca7e0a, type: 2}
   metalCost: 0
   ammoCost: 0
   isAOE: 1
@@ -27,7 +27,7 @@ MonoBehaviour:
   - Push -2
   targetEffects: []
   spriteType: 2
-  targetPartcles: {fileID: 11400000, guid: fe294dc1196f7c74199282a0d6041175, type: 2}
+  targetPartcles: {fileID: 0}
   ai: {fileID: 0}
   accmod: 85
   critmod: 5

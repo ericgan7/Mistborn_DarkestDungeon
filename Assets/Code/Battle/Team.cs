@@ -10,12 +10,12 @@ public class Team : MonoBehaviour
     public bool isAlly;
     public List<Vector3> positions;
     public int supriseChance;
-    int direction;
+    public Vector3 direction;
     GameState state;
 
     private void Awake()
     {
-        direction = isAlly ? -1 : 1;
+        direction = isAlly ? Vector3.one : new Vector3(-1, 1, 1);
         positions = new List<Vector3>(units.Count);
         for (int i = 0; i < units.Count; ++i)
         {

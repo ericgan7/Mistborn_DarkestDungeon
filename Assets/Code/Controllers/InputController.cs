@@ -15,13 +15,21 @@ public class InputController : MonoBehaviour
     public GameState state;
     [SerializeField] InputState inputState;
     Ability currentAbility;
+
+    public void Init(){
+        GameState.Instance.ic = this;
+        GameEvents.current.onSelectAbility += SelectAbility;
+    }
+
+    private void OnDestroy() {
+        GameEvents.current.onSelectAbility -= SelectAbility;
+    }
    
 
     // Start is called before the first frame update
     void Awake()
     {
-        state = FindObjectOfType<GameState>();
-        state.ic = this;
+        Init();
         inputState = InputState.Event;
     }
 
@@ -39,15 +47,15 @@ public class InputController : MonoBehaviour
         {
             if (c.targetedState == TargetedState.Targeted)
             {
-                state.gc.PlayAction(currentAbility, c);
+                GameState.Instance.gc.PlayAction(currentAbility, c);
             }
             else
             {
-                state.uic.DeselectAbility();
+                GameState.Instance.uic.DeselectAbility();
             }
         } else if (inputState == InputState.Event){
-            state.uic.SetCurrentUnit(c);
-            state.gc.SetCurrentUnit(c);
+            GameState.Instance.uic.SetCurrentUnit(c);
+            GameState.Instance.gc.SetCurrentUnit(c);
         }
     }
 
@@ -61,19 +69,22 @@ public class InputController : MonoBehaviour
         inputState = b ? InputState.Block : InputState.Combat;
     }
 
-    public bool SelectAbility(Ability a)
+    public void SelectAbility(Ability ability)
     {
-        //TODO : check current turn
         if (inputState != InputState.Block)
         {
-            if (state.gc.mode != GameMode.combat && !a.usableOutOfComabat){
-                return false;
+            // unusable outside of comabt
+            if (GameState.Instance.gc.mode != GameMode.combat && !ability.usableOutOfComabat){
+                return;
             }
+            if (ability == null){
+                DeselectAbility();
+                return;
+            }
+            // set ability
             inputState = InputState.PlayingAction;
-            currentAbility = a;
-            return true;
+            currentAbility = ability;
         }
-        return false;
     }
 
     public void DeselectAbility()

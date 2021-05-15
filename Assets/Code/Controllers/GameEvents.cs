@@ -41,4 +41,11 @@ public class GameEvents : MonoBehaviour
             onChangeMetal();
         }
     }
+
+    public event Action<Ability> onSelectAbility;
+    public void SelectAbilityTrigger(Ability ability){
+        if (onSelectAbility != null){
+            onSelectAbility(ability);
+        }
+    }
 }

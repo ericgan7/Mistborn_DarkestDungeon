@@ -7,28 +7,26 @@ public class AbilityMenu : MonoBehaviour
     public List<AbilityButton> abilityButtons;
 
     public List<Ability> generalAbilities; //move and pass;
-    public GameState state;
     AbilityButton selected;
     void Awake(){
         abilityButtons = new List<AbilityButton>(GetComponentsInChildren<AbilityButton>());
-        state = FindObjectOfType<GameState>();
     }
 
     public bool SelectAbility(AbilityButton abilityButton, Ability ability){
-        if (state.ic.GetBlocked()){
+        if (GameState.Instance.ic.GetBlocked()){
             return false;
         }
         foreach(AbilityButton ab in abilityButtons){
             if (abilityButton == ab){
+                // if no abilty is selected
                 if (selected != abilityButton){
-                    state.ic.SelectAbility(ability);
-                    state.uic.SelectAbility(ability);
+                    GameEvents.current.SelectAbilityTrigger(ability);
                     selected = abilityButton;
                 }
+                // if ability is already selected, toggle off
                 else {
                     ab.DeselectAbility();
-                    state.ic.DeselectAbility();
-                    state.uic.DeselectAbility();
+                    GameEvents.current.SelectAbilityTrigger(null);
                     selected = null;
                     return false;
                 }

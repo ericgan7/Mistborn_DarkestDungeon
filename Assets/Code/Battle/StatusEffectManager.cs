@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class StatusEffectManager: MonoBehaviour
 {
-    [SerializeField] public Unit unit;
-    List<StatusEffectDisplay> displays;
+    public StatusIcon prefab;
+    public List<StatusIcon> icons;
+    [SerializeField] Unit unit;
+    GameState state;
+
     List<Traits> traits;
     List<StatusEffect> modifiers;
     List<StatusEffect> bleed;
@@ -39,11 +42,12 @@ public class StatusEffectManager: MonoBehaviour
     }
     
     void Init(){
-        displays = new List<StatusEffectDisplay>();
+        icons = new List<StatusIcon>();
         modifiers = new List<StatusEffect>();
         bleed = new List<StatusEffect>();
         traits = new List<Traits>();
         terror = new List<StatusEffect>();
+        state = FindObjectOfType<GameState>();
         //initialize traits from unit character
         Affliction = null;
     }
@@ -58,31 +62,6 @@ public class StatusEffectManager: MonoBehaviour
             if (t.Type == EffectType.baseClass){
                 CheckSpawnIcon(t.Type);
             }
-        }
-    }
-
-    public void RegisterStatusDisplay(StatusEffectDisplay display){
-        if (display == null){
-            return;
-        }
-        Debug.Log(display);
-        displays.Add(display);
-        display.Init(this);
-    }
-
-    public void UnRegisterStatusDisplay(StatusEffectDisplay display){
-        displays.Remove(display);
-    }
-
-    public void CheckSpawnIcon(EffectType type){
-        foreach(StatusEffectDisplay display in displays){
-            display.CheckSpawnIcon(type);
-        }
-    }
-    
-    public void CheckClearIcon(){
-        foreach(StatusEffectDisplay display in displays){
-            display.CheckClearIcon();
         }
     }
 
@@ -160,6 +139,97 @@ public class StatusEffectManager: MonoBehaviour
         }
         CheckSpawnIcon(effect.Type);
     }
+
+    public void CheckSpawnIcon(EffectType type)
+    {
+        //TODO add traits icons
+        foreach(StatusIcon si in icons)
+        {
+            if (si.type == type)//if icon exists, no need to spawn
+            {
+                //TODO add animation for updating status
+                return;
+            }
+        }
+        StatusIcon icon = Instantiate<StatusIcon>(prefab, transform);
+        icon.manager = this;
+        icon.type = type;
+        if (type == EffectType.baseClass){
+            icon.SetImage(SpriteLibrary.GetStatusSprite(unit.stats.GetClassName()));
+        } else {
+            icon.SetImage(SpriteLibrary.GetStatusSprite(EffectName.ToString(type)));
+        }
+        icon.SetPosition(icons.Count);
+        icons.Add(icon);
+    }
+
+    //TO DO spawn affliction icon
+
+    public void CheckClearIcon()
+    {
+        for (int i = icons.Count -1; i >= 0; --i)
+        {
+            switch (icons[i].type)
+            {
+                case EffectType.bleed:
+                    if (bleed.Count == 0)
+                    {
+                        RemoveIcon(i);
+                    }
+                    break;
+                case EffectType.block:
+                    if (block == null)
+                    {
+                        RemoveIcon(i);
+                    }
+                    break;
+                case EffectType.buff:
+                case EffectType.debuff:
+                    bool remove = true;
+                    foreach (StatusEffect s in modifiers)
+                    {
+                        if (s.Type == icons[i].type)
+                        {
+                            remove = false;
+                        }
+                    }
+                    if (remove)
+                    {
+                        RemoveIcon(i);
+                    }
+                    break;
+                case EffectType.mark:
+                    if(mark == null)
+                    {
+                        RemoveIcon(i);
+                    }
+                    break;
+                case EffectType.stun:
+                    if (stun == null)
+                    {
+                        RemoveIcon(i);
+                    }
+                    break;
+                case EffectType.guard:
+                    if (guard == null){
+                        RemoveIcon(i);
+                    }
+                    break;
+                case EffectType.baseClass:
+                    break;
+                default:
+                    Debug.Log("Missing clear icon switch");
+                    break;
+            }
+        }
+    }
+
+    public void RemoveIcon(int index)
+    {
+        Destroy(icons[index].gameObject);
+        icons.RemoveAt(index);
+    }
+
     public float GetStatModifier(StatType type, Unit target = null)
     {
         float amount = 0;
@@ -170,10 +240,10 @@ public class StatusEffectManager: MonoBehaviour
         {
             amount += e.GetStat(type);
         }
-        foreach (StatusEffect e in GameState.Instance.metal.GetMetalEffects().GetEffects(unit.UnitTeam)){
+        foreach (StatusEffect e in state.metal.GetMetalEffects().GetEffects(unit.UnitTeam)){
             amount += e.GetStat(type);
         }
-        foreach (StatusEffect e in GameState.Instance.am.GetAlarmEffects().GetEffects(unit.UnitTeam)){
+        foreach (StatusEffect e in state.am.GetAlarmEffects().GetEffects(unit.UnitTeam)){
             amount += e.GetStat(type);
         }
         foreach(EquipableItem item in unit.stats.GetItems()){

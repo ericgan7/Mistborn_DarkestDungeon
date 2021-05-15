@@ -10,7 +10,7 @@ public class EnemyAI : ScriptableObject
 
     public float GetAbilityPreference(int index)
     {
-        if (index >= abilityPreferences.Count)
+        if (index > abilityPreferences.Count)
         {
             return 1f;
         }

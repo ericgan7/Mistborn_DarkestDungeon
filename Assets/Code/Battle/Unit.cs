@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     [SerializeField] Image backSprite;
     [SerializeField] SelectionIcon selectionIcon;
     [SerializeField] StatusEffectManager statusEffects;
+    [SerializeField] StatusEffectDisplay statusEffectDisplay;
     [SerializeField] EffectUI tooltip;
     [SerializeField] HealthManager health;
     [SerializeField] Light2D hurtLight;
@@ -150,6 +151,7 @@ public class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         stats = new Stats(c, this, statusEffects);
         statusEffects.SetCharacter(c);
         stats.Init();
+        statusEffects.RegisterStatusDisplay(statusEffectDisplay);
         sprite.transform.localScale = UnitTeam.direction;
         ai = c.ai;
         SetSprite(c.GetSpriteHeader() + "_Default");

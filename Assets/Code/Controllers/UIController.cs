@@ -31,22 +31,31 @@ public class UIController : MonoBehaviour
     [SerializeField] DetailedCharacterMenu characterMenu;
     [SerializeField] GameObject menu;
 
+    public void Init(){
+        GameState.Instance.uic = this;
+        GameEvents.current.onSelectAbility += SelectAbility;
+    }
+
+    private void OnDestroy() {
+        GameEvents.current.onSelectAbility -= SelectAbility;
+    }
+
     private void Awake()
     {
-        state = FindObjectOfType<GameState>();
-        state.uic = this;
+        Init();
     }
 
     public void SetCurrentUnit(Unit current)
     {
         currentCharacter = current;
-        foreach(Unit u in state.ally.GetUnits()){
+        // TODO: consider using game events to set health
+        foreach(Unit u in GameState.Instance.ally.GetUnits()){
             u.SetTargetState(TargetedState.Untargeted);
             u.SetHealthChange(Vector2Int.zero);
             u.SetStressChange(0);
             u.SetToolTip(null, null);
         }
-        foreach(Unit u in state.enemy.GetUnits()){
+        foreach(Unit u in GameState.Instance.enemy.GetUnits()){
             u.SetTargetState(TargetedState.Untargeted);
             u.SetHealthChange(Vector2Int.zero);
             u.SetStressChange(0);
@@ -62,24 +71,26 @@ public class UIController : MonoBehaviour
         {
             stats[i].text = GetStatText(current, i);
         }
-        items.SetIconUsable(current, state.gc.mode);
+        items.SetIconUsable(current, GameState.Instance.gc.mode);
     }
 
     public void SelectAbility(Ability a)
     {
         DeselectAbility();
-        a.SetTargets(currentCharacter, state.ally, state.enemy);
+        if (a){
+            a.SetTargets(currentCharacter, GameState.Instance.ally, GameState.Instance.enemy);
+        }
     }
    
     public void DeselectAbility()
     {
-        foreach (Unit u in state.ally.GetUnits()){
+        foreach (Unit u in GameState.Instance.ally.GetUnits()){
             u.SetTargetState(TargetedState.Untargeted);
             u.SetHealthChange(Vector2Int.zero);
             u.SetStressChange(0);
             u.SetToolTip(null, null);
         }
-        foreach (Unit u in state.enemy.GetUnits()){
+        foreach (Unit u in GameState.Instance.enemy.GetUnits()){
             u.SetTargetState(TargetedState.Untargeted);
             u.SetHealthChange(Vector2Int.zero);
             u.SetStressChange(0);
@@ -90,10 +101,10 @@ public class UIController : MonoBehaviour
 
     public void ResetTargetState()
     {
-        foreach (Unit u in state.ally.GetUnits()){
+        foreach (Unit u in GameState.Instance.ally.GetUnits()){
             u.SetTargetState(TargetedState.Untargeted);
         }
-        foreach (Unit u in state.enemy.GetUnits()){
+        foreach (Unit u in GameState.Instance.enemy.GetUnits()){
             u.SetTargetState(TargetedState.Untargeted);
         }
     }
